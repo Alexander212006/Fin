@@ -1,0 +1,63 @@
+import {
+  LayoutDashboard,
+  BadgeDollarSign,
+  Receipt,
+  CreditCard,
+  Settings,
+  X
+} from "lucide-react";
+import { NavLink } from "react-router-dom";
+
+const sidebarItems = [
+  { label: "Dashboard", icon: LayoutDashboard, path: "/Dashboard" },
+  { label: "Add income", icon: BadgeDollarSign, path: "/AddIncome" },
+  { label: "Add expense", icon: Receipt, path: "/AddExpense" },
+  { label: "History", icon: CreditCard, path: "/History" },
+  { label: "Settings", icon: Settings, path: "/Setting" },
+];
+
+export const Sidebar = ({ mobile = false, onClose }) => {
+  return (
+    <aside
+      className={`flex h-full w-67.5 shrink-0 flex-col border-r border-zinc-200 bg-[#f7f7f7] px-5 py-6 ${
+        mobile ? "shadow-2xl" : ""
+      }`}
+    >
+      <div className="flex items-center justify-between">
+        <h1 className="text-3xl font-bold tracking-tight text-zinc-900">Fin</h1>
+        {mobile && (
+          <button
+            onClick={onClose}
+            className="rounded-xl p-2 text-zinc-600 transition hover:bg-zinc-200"
+            aria-label="Close menu"
+          >
+            <X className="h-5 w-5" />
+          </button>
+        )}
+      </div>
+
+      <nav className="mt-12 space-y-2">
+        {sidebarItems.map((item) => {
+          const Icon = item.icon;
+          return (
+            <NavLink
+              key={item.label}
+              to={item.path}
+              onClick={onClose}
+              className={({isActive}) => 
+                `flex w-full items-center gap-4 rounded-2xl px-3 py-3 text-left transition ${
+                isActive
+                  ? "bg-white text-zinc-900 shadow-sm"
+                  : "text-zinc-600 hover:bg-white hover:text-zinc-900"
+              }`
+              }
+            >
+              <Icon className="h-5 w-5" />
+              <span className="text-[15px] font-medium">{item.label}</span>
+            </NavLink>
+          );
+        })}
+      </nav>
+    </aside>
+  );
+};
