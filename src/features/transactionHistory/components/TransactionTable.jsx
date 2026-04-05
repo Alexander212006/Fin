@@ -5,28 +5,36 @@ import { formatDate } from "../../../utils/date";
 import { ACCOUNTS } from "../../../constants/accounts";
 import { TrendingDown, TrendingUp } from "lucide-react";
 import { getTransactionAccount } from "../utils/buildTransactions";
+import { useI18n } from "../../../i18n";
 
-export const TransactionTable = ({ transactions }) => {
+export const TransactionTable = ({ transactions, currency, languageRegion }) => {
+  const { t } = useI18n();
   return (
     <div className="rounded-[28px] border border-zinc-200 bg-white p-4 sm:p-6">
       <div className="mb-5 flex items-center justify-between gap-3">
         <div>
           <h3 className="text-2xl font-medium text-zinc-800">
-            Recent transactions
+            {t("history.recentTransactions")}
           </h3>
           <p className="mt-1 text-sm text-zinc-500">
-            Showing {transactions.length} transaction
-            {transactions.length === 1 ? "" : "s"} this month
+            {t(
+              "history.showingTransactionsThisMonth",
+              "Showing {count} transaction{suffix} this month",
+              {
+                count: String(transactions.length),
+                suffix: transactions.length === 1 ? "" : "s",
+              },
+            )}
           </p>
         </div>
         <button className="rounded-2xl border border-zinc-200 bg-[#fafafa] px-4 py-2 text-sm font-medium text-zinc-700">
-          Export
+          {t("history.export")}
         </button>
       </div>
 
       {transactions.length === 0 ? (
         <div className="rounded-2xl border border-dashed border-zinc-200 bg-[#fafafa] px-4 py-10 text-center text-sm text-zinc-500">
-          No transactions recorded for this month yet.
+          {t("history.noTransactionsThisMonth")}
         </div>
       ) : null}
 
@@ -35,7 +43,10 @@ export const TransactionTable = ({ transactions }) => {
           const isIncome = item.type === "income";
           const account = getTransactionAccount(item);
           const accountLabel =
-            ACCOUNTS.find((acc) => acc.value === account)?.label ?? "N/A";
+            t(
+              `options.accounts.${account}`,
+              ACCOUNTS.find((acc) => acc.value === account)?.label ?? t("history.emptyValue"),
+            );
 
           return (
             <article
@@ -51,10 +62,10 @@ export const TransactionTable = ({ transactions }) => {
                     }`}
                   >
                     {isIncome ? "+" : "-"}
-                    {formatCurrency(item.amount)}
+                    {formatCurrency(item.amount, currency, languageRegion)}
                   </p>
                   <p className="mt-1 text-sm text-zinc-500">
-                    {item.category || "N/A"}
+                    {item.category || t("history.emptyValue")}
                   </p>
                 </div>
                 <span
@@ -69,20 +80,20 @@ export const TransactionTable = ({ transactions }) => {
                   ) : (
                     <TrendingDown className="h-4 w-4" />
                   )}
-                  {isIncome ? "Income" : "Expense"}
+                  {isIncome ? t("history.types.income") : t("history.types.expense")}
                 </span>
               </div>
 
               <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
                 <div className="rounded-xl bg-white px-3 py-2">
                   <p className="text-xs uppercase tracking-wide text-zinc-400">
-                    Account
+                    {t("history.tableHeaders.account")}
                   </p>
                   <p className="mt-1 text-zinc-700">{accountLabel}</p>
                 </div>
                 <div className="rounded-xl bg-white px-3 py-2">
                   <p className="text-xs uppercase tracking-wide text-zinc-400">
-                    Date
+                    {t("history.tableHeaders.date")}
                   </p>
                   <p className="mt-1 text-zinc-700">{formatDate(item.date)}</p>
                 </div>
@@ -98,14 +109,19 @@ export const TransactionTable = ({ transactions }) => {
             <tr className="text-sm text-zinc-500">
               {TRANSACTION_TABLE_HEADERS.map((header) => (
                 <th className="px-5 py-4 font-medium" key={header}>
-                  {header}
+                  {t(`history.tableHeaders.${header.toLowerCase()}`, header)}
                 </th>
               ))}
             </tr>
           </thead>
           <tbody>
             {transactions.map((item) => (
-              <TransactionItem key={item.id} item={item} />
+              <TransactionItem
+                key={item.id}
+                item={item}
+                currency={currency}
+                languageRegion={languageRegion}
+              />
             ))}
           </tbody>
         </table>

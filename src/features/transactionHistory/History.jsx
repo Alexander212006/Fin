@@ -4,13 +4,15 @@ import { StatCard } from "./components/StatCard";
 import { FilterBar } from "./components/FilterBar";
 import { TransactionTable } from "./components/TransactionTable";
 import { useTransactionHistory } from "./hook/useTransactionHistory";
+import { useI18n } from "../../i18n";
 
-export const History = ({ transactions }) => {
+export const History = ({ transactions, currency, languageRegion }) => {
+  const { t } = useI18n();
   const { filters, filteredTransactions, summary } = useTransactionHistory({
     transactions,
   });
 
-  const month = filters.selectedDate.toLocaleDateString("en-US", {
+  const month = filters.selectedDate.toLocaleDateString(languageRegion, {
     month: "long",
   });
 
@@ -18,31 +20,31 @@ export const History = ({ transactions }) => {
     <section>
       <div className="mb-6">
         <h2 className="text-3xl font-semibold tracking-tight text-zinc-800 sm:text-[42px]">
-          History
+          {t("history.title")}
         </h2>
         <p className="mt-2 text-sm text-zinc-500 sm:text-base">
-          Review all your recorded transactions in one place.
+          {t("history.subtitle")}
         </p>
       </div>
 
       <div className="mb-6 grid grid-cols-1 gap-4 xl:grid-cols-3">
         <StatCard
-          title="Total entries"
+          title={t("history.totalEntries")}
           value={summary.total.toString()}
-          subtitle="Transactions recorded this month"
+          subtitle={t("history.transactionsRecordedThisMonth")}
           icon={CreditCard}
         />
         <StatCard
-          title="Total income"
-          value={formatCurrency(summary.income)}
-          subtitle={`${month} income transactions`}
+          title={t("history.totalIncome")}
+          value={formatCurrency(summary.income, currency, languageRegion)}
+          subtitle={`${month} ${t("history.incomeTransactions")}`}
           icon={TrendingUp}
           tone="income"
         />
         <StatCard
-          title="Total expense"
-          value={formatCurrency(summary.expense)}
-          subtitle={`${month} expense transactions`}
+          title={t("history.totalExpense")}
+          value={formatCurrency(summary.expense, currency, languageRegion)}
+          subtitle={`${month} ${t("history.expenseTransactions")}`}
           icon={TrendingDown}
           tone="expense"
         />
@@ -50,7 +52,11 @@ export const History = ({ transactions }) => {
 
       <div className="space-y-6">
         <FilterBar {...filters} />
-        <TransactionTable transactions={filteredTransactions} />
+        <TransactionTable
+          transactions={filteredTransactions}
+          currency={currency}
+          languageRegion={languageRegion}
+        />
       </div>
     </section>
   );

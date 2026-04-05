@@ -8,6 +8,8 @@ import { AddExpense } from "./features/addExpense/AddExpense";
 import { History } from "./features/transactionHistory/History";
 import { Setting } from "./features/setting/Setting";
 import toast, { Toaster } from "react-hot-toast";
+import { I18nProvider } from "./i18n";
+
 
 const initialTransactions = {
   id: crypto.randomUUID(),
@@ -23,10 +25,12 @@ const initialTransactions = {
 export const LandingPage = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [transactions, setTransactions] = useState([initialTransactions]);
+  const [currency, setCurrency] = useState("PHP");
+  const [languageRegion, setLanguageRegion] = useState("en-PH");
 
-  console.log(transactions);
   return (
-    <div className="min-h-screen bg-[#efefef] text-zinc-900">
+    <I18nProvider languageRegion={languageRegion}>
+      <div className="min-h-screen bg-[#efefef] text-zinc-900">
       <Toaster position="top-right" reverseOrder={false} />
       {/* Desktop sidebar */}
       <div className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-40 lg:block lg:w-[270px]">
@@ -64,6 +68,8 @@ export const LandingPage = () => {
                     <Dashboard
                       transactions={transactions}
                       setTransactions={setTransactions}
+                      currency={currency}
+                      languageRegion={languageRegion}
                     />
                   }
                 />
@@ -73,6 +79,8 @@ export const LandingPage = () => {
                     <Dashboard
                       transactions={transactions}
                       setTransactions={setTransactions}
+                      currency={currency}
+                      languageRegion={languageRegion}
                     />
                   }
                 />
@@ -94,13 +102,28 @@ export const LandingPage = () => {
                     />
                   }
                 />
-                <Route path="/History" element={<History transactions={transactions}/>} />
-                <Route path="/Setting" element={<Setting />} />
+                <Route
+                  path="/History"
+                  element={
+                    <History
+                      transactions={transactions}
+                      currency={currency}
+                      languageRegion={languageRegion}
+                    />
+                  }
+                />
+                <Route
+                  path="/Setting"
+                  element={
+                    <Setting currency={currency} setCurrency={setCurrency} languageRegion={languageRegion} setLanguageRegion={setLanguageRegion} />
+                  }
+                />
               </Routes>
             </div>
           </div>
         </main>
       </div>
     </div>
+    </I18nProvider>
   );
 };

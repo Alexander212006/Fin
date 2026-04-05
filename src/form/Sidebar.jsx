@@ -7,16 +7,18 @@ import {
   X
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
-
-const sidebarItems = [
-  { label: "Dashboard", icon: LayoutDashboard, path: "/Dashboard" },
-  { label: "Add income", icon: BadgeDollarSign, path: "/AddIncome" },
-  { label: "Add expense", icon: Receipt, path: "/AddExpense" },
-  { label: "History", icon: CreditCard, path: "/History" },
-  { label: "Settings", icon: Settings, path: "/Setting" },
-];
+import { useI18n } from "../i18n";
 
 export const Sidebar = ({ mobile = false, onClose }) => {
+  const { t } = useI18n();
+  const sidebarItems = [
+    { label: t("nav.dashboard"), icon: LayoutDashboard, path: "/Dashboard" },
+    { label: t("nav.addIncome"), icon: BadgeDollarSign, path: "/AddIncome" },
+    { label: t("nav.addExpense"), icon: Receipt, path: "/AddExpense" },
+    { label: t("nav.history"), icon: CreditCard, path: "/History" },
+    { label: t("nav.settings"), icon: Settings, path: "/Setting" },
+  ];
+
   return (
     <aside
       className={`flex h-full w-67.5 shrink-0 flex-col border-r border-zinc-200 bg-[#f7f7f7] px-5 py-6 ${
@@ -29,7 +31,7 @@ export const Sidebar = ({ mobile = false, onClose }) => {
           <button
             onClick={onClose}
             className="rounded-xl p-2 text-zinc-600 transition hover:bg-zinc-200"
-            aria-label="Close menu"
+            aria-label={t("header.closeMenu")}
           >
             <X className="h-5 w-5" />
           </button>

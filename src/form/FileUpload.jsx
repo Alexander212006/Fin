@@ -1,7 +1,9 @@
 import { X } from "lucide-react";
 import { useRef, useState } from "react";
+import { useI18n } from "../i18n";
 
 export const FileUpload = ({ setFile }) => {
+  const { t } = useI18n();
   const fileInputRef = useRef(null);
   const [fileName, setFileName] = useState("");
 
@@ -15,14 +17,13 @@ export const FileUpload = ({ setFile }) => {
 
     setFile(file);
     setFileName(file.name);
-    console.log(file); // full file object
   };
 
   const handleRemove = () => {
     setFile(null);
     setFileName("");
-    fileInputRef.current.value = null; // reset file input
-  }
+    fileInputRef.current.value = null;
+  };
 
   return (
     <div className="space-y-3">
@@ -41,12 +42,12 @@ export const FileUpload = ({ setFile }) => {
         onClick={() => fileInputRef.current.click()}
         className="rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50"
       >
-        Choose file
+        {t("forms.chooseFile")}
       </button>
 
       {/* Show selected file */}
       {fileName && (
-        <p className="text-sm text-zinc-600">Selected: {fileName} 
+        <p className="text-sm text-zinc-600">{t("forms.selected")} {fileName} 
           <button
           onClick={handleRemove}
           className="p-1 rounded hover:bg-gray-200 transition">

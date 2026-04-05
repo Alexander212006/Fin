@@ -2,28 +2,68 @@ import { BadgeDollarSign, Check, Image } from "lucide-react";
 import { FileUpload } from "../../form/FileUpload";
 import { useIncomeForm } from "./hooks/useIncomeForm";
 import { incomeFieldConfig } from "./config/formFields";
+import { useI18n } from "../../i18n";
 
 export const AddIncome = ({ toast, setTransactions }) => {
+  const { t } = useI18n();
   const { form, setFile, updateField, handleSubmit } = useIncomeForm({
     toast,
     setTransactions,
   });
+  const fields = incomeFieldConfig.map((field) => ({
+    ...field,
+    props: {
+      ...field.props,
+      label:
+        field.name === "title"
+          ? t("forms.fields.incomeTitle", field.props.label)
+          : field.name === "amount"
+            ? t("forms.fields.amount", field.props.label)
+            : field.name === "source"
+              ? t("forms.fields.source", field.props.label)
+              : field.name === "date"
+                ? t("forms.fields.dateReceived", field.props.label)
+                : field.name === "account"
+                  ? t("forms.fields.account", field.props.label)
+                  : field.props.label,
+      placeholder:
+        field.name === "title"
+          ? t("forms.placeholders.enterIncomeTitle", field.props.placeholder)
+          : field.name === "amount"
+            ? t("forms.placeholders.zeroAmount", field.props.placeholder)
+            : field.name === "date"
+              ? t("forms.placeholders.selectDate", field.props.placeholder)
+              : field.props.placeholder,
+      options:
+        field.name === "source"
+          ? field.props.options.map((option) => ({
+              ...option,
+              label: t(`options.incomeSources.${option.value}`, option.label),
+            }))
+          : field.name === "account"
+            ? field.props.options.map((option) => ({
+                ...option,
+                label: t(`options.accounts.${option.value}`, option.label),
+              }))
+            : field.props.options,
+    },
+  }));
 
   return (
     <section>
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-3xl font-semibold tracking-tight text-zinc-800 sm:text-[42px]">
-            Add income
+            {t("addIncome.title")}
           </h2>
           <p className="mt-2 text-sm text-zinc-500 sm:text-base">
-            Record a new income entry and keep your balance updated.
+            {t("addIncome.subtitle")}
           </p>
         </div>
 
         <div className="flex items-center gap-3 self-start rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-emerald-700">
           <Check className="h-5 w-5" />
-          <span className="text-sm font-medium">Auto-categorized</span>
+          <span className="text-sm font-medium">{t("addIncome.badge")}</span>
         </div>
       </div>
 
@@ -38,16 +78,16 @@ export const AddIncome = ({ toast, setTransactions }) => {
             </div>
             <div>
               <h3 className="text-2xl font-medium text-zinc-800">
-                Income details
+                {t("addIncome.detailsTitle")}
               </h3>
               <p className="text-sm text-zinc-500">
-                Fill in the form fields below
+                {t("addIncome.detailsSubtitle")}
               </p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-            {incomeFieldConfig.map(
+            {fields.map(
               ({ name, component: Component, props, colSpan }) => (
                 <div key={name} className={colSpan}>
                   <Component
@@ -62,14 +102,14 @@ export const AddIncome = ({ toast, setTransactions }) => {
             <div className="sm:col-span-2">
               <label className="block">
                 <span className="mb-3 block text-sm font-medium text-zinc-700 sm:text-base">
-                  Notes(optional)
+                  {t("addIncome.notes")}
                 </span>
                 <div className="rounded-2xl border border-zinc-200 bg-[#fafafa] px-4 py-3 transition focus-within:border-zinc-300 focus-within:bg-white">
                   <textarea
                     rows={5}
                     value={form.notes}
                     onChange={(e) => updateField("notes", e.target.value)}
-                    placeholder="Add a short note"
+                    placeholder={t("addIncome.notesPlaceholder")}
                     className="w-full resize-none bg-transparent text-sm text-zinc-800 outline-none placeholder:text-zinc-400 sm:text-base"
                   />
                 </div>
@@ -85,10 +125,10 @@ export const AddIncome = ({ toast, setTransactions }) => {
                 </div>
                 <div>
                   <h4 className="font-medium text-zinc-800">
-                    Attach proof of payment(optional)
+                    {t("addIncome.attachTitle")}
                   </h4>
                   <p className="mt-1 text-sm text-zinc-500">
-                    Upload receipt, invoice, or transaction screenshot.
+                    {t("addIncome.attachSubtitle")}
                   </p>
                 </div>
               </div>
@@ -102,29 +142,29 @@ export const AddIncome = ({ toast, setTransactions }) => {
               className="rounded-2xl border border-zinc-200 bg-white px-5 py-3 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50 sm:text-base"
               type="button"
             >
-              Save as draft
+              {t("addIncome.saveDraft")}
             </button>
             <button
               type="submit"
               className="rounded-2xl bg-zinc-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-zinc-800 sm:text-base"
             >
-              Add income
+              {t("addIncome.submit")}
             </button>
           </div>
         </form>
 
         <div className="space-y-6">
           <div className="rounded-[30px] border border-zinc-200 bg-white p-6 sm:p-7">
-            <h3 className="text-2xl font-medium text-zinc-800">Quick tips</h3>
+            <h3 className="text-2xl font-medium text-zinc-800">{t("addIncome.quickTips")}</h3>
             <div className="mt-5 space-y-4 text-sm text-zinc-600 sm:text-base">
               <div className="rounded-2xl bg-[#f7f7f7] p-4">
-                Use clear titles like client name or payment source.
+                {t("addIncome.tips.clearTitles")}
               </div>
               <div className="rounded-2xl bg-[#f7f7f7] p-4">
-                Add notes to make future history tracking easier.
+                {t("addIncome.tips.addNotes")}
               </div>
               <div className="rounded-2xl bg-[#f7f7f7] p-4">
-                Keep receipts or screenshots for reconciliation.
+                {t("addIncome.tips.keepReceipts")}
               </div>
             </div>
           </div>

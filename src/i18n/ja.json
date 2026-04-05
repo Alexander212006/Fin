@@ -1,0 +1,255 @@
+{
+  "app": {
+    "name": "Fin"
+  },
+  "nav": {
+    "dashboard": "ダッシュボード",
+    "addIncome": "収入を追加",
+    "addExpense": "支出を追加",
+    "history": "履歴",
+    "settings": "設定"
+  },
+  "header": {
+    "menu": "メニュー",
+    "openMenu": "メニューを開く",
+    "closeMenu": "メニューを閉じる",
+    "welcomeBack": "お帰りなさい",
+    "overview": "概要",
+    "notifications": "通知",
+    "premiumAccount": "プレミアムアカウント"
+  },
+  "dashboard": {
+    "title": "概要",
+    "myBalance": "残高",
+    "balanceOverview": "口座残高の概要",
+    "budgetOverview": "予算の概要",
+    "income": "収入",
+    "expense": "支出",
+    "transactionHistory": "取引履歴",
+    "showAll": "すべて表示",
+    "today": "今日",
+    "noTransactions": "まだ取引がありません。",
+    "actions": {
+      "addAgain": "再追加",
+      "edit": "編集",
+      "delete": "削除"
+    },
+    "editTransaction": {
+      "title": "取引を編集",
+      "subtitle": "以下の取引内容を更新してください。",
+      "cancel": "キャンセル",
+      "saveChanges": "変更を保存",
+      "close": "編集フォームを閉じる"
+    }
+  },
+  "history": {
+    "title": "履歴",
+    "subtitle": "記録したすべての取引を一か所で確認できます。",
+    "totalEntries": "総件数",
+    "transactionsRecordedThisMonth": "今月記録された取引",
+    "totalIncome": "総収入",
+    "incomeTransactions": "件の収入取引",
+    "totalExpense": "総支出",
+    "expenseTransactions": "件の支出取引",
+    "recentTransactions": "最近の取引",
+    "showingTransactionsThisMonth": "今月の取引 {count} 件を表示中",
+    "export": "エクスポート",
+    "noTransactionsThisMonth": "今月はまだ取引が記録されていません。",
+    "searchTransaction": "取引を検索",
+    "allAccounts": "すべての口座",
+    "tableHeaders": {
+      "transaction": "取引",
+      "category": "カテゴリー",
+      "account": "口座",
+      "date": "日付",
+      "type": "種類",
+      "amount": "金額"
+    },
+    "types": {
+      "all": "すべての種類",
+      "income": "収入",
+      "expense": "支出"
+    },
+    "emptyValue": "該当なし"
+  },
+  "addIncome": {
+    "title": "収入を追加",
+    "subtitle": "新しい収入を記録して、残高を最新の状態に保ちます。",
+    "badge": "自動分類済み",
+    "detailsTitle": "収入の詳細",
+    "detailsSubtitle": "以下のフォーム項目を入力してください",
+    "notes": "メモ（任意）",
+    "notesPlaceholder": "短いメモを追加",
+    "attachTitle": "支払い証明を添付（任意）",
+    "attachSubtitle": "領収書、請求書、または取引のスクリーンショットをアップロードします。",
+    "saveDraft": "下書き保存",
+    "submit": "収入を追加",
+    "quickTips": "クイックヒント",
+    "tips": {
+      "clearTitles": "取引先名や支払い元など、分かりやすいタイトルを使いましょう。",
+      "addNotes": "後で履歴を追いやすいようにメモを追加しましょう。",
+      "keepReceipts": "照合作業のために領収書やスクリーンショットを保管しましょう。"
+    }
+  },
+  "addExpense": {
+    "title": "支出を追加",
+    "subtitle": "新しい支出を記録して、支出履歴を最新の状態に保ちます。",
+    "badge": "予算追跡中",
+    "detailsTitle": "支出の詳細",
+    "detailsSubtitle": "以下のフォーム項目を入力してください",
+    "notes": "メモ（任意）",
+    "notesPlaceholder": "短いメモを追加",
+    "attachTitle": "領収書を添付（任意）",
+    "attachSubtitle": "領収書、請求書、または支払い確認書をアップロードします。",
+    "saveDraft": "下書き保存",
+    "submit": "支出を追加",
+    "quickTips": "クイックヒント",
+    "tips": {
+      "pickCategory": "レポートを正確に保つため、正しいカテゴリーを選びましょう。",
+      "addMerchant": "後で履歴を検索しやすいように店舗名を追加しましょう。",
+      "keepReceipts": "記録した支出と照合できるように領収書を保管しましょう。"
+    }
+  },
+  "settings": {
+    "title": "設定",
+    "subtitle": "アカウント、各種設定、セキュリティ、アプリの動作を管理します。",
+    "sections": {
+      "profile": {
+        "title": "プロフィール",
+        "subtitle": "基本的なアカウント情報と通貨設定",
+        "profileInformation": "プロフィール情報",
+        "defaultCurrency": "デフォルト通貨",
+        "languageRegion": "言語と地域",
+        "edit": "編集"
+      },
+      "notifications": {
+        "title": "通知",
+        "subtitle": "リマインダーとアカウント通知を管理します",
+        "pushNotifications": "プッシュ通知",
+        "pushNotificationsDescription": "取引やアカウント活動の通知を受け取ります",
+        "budgetAlerts": "予算アラート",
+        "budgetAlertsDescription": "支出が上限に近づいたときに通知します"
+      },
+      "appearance": {
+        "title": "表示",
+        "subtitle": "デバイスでのアプリの見た目をカスタマイズします",
+        "darkMode": "ダークモード",
+        "darkModeDescription": "ライト表示とダーク表示を切り替えます",
+        "accentColor": "アクセントカラー",
+        "accentColorDescription": "クリーンなダッシュボード向けのニュートラルグレーテーマ"
+      },
+      "security": {
+        "title": "セキュリティ",
+        "subtitle": "アカウントと機密の財務データを保護します",
+        "changePassword": "パスワードを変更",
+        "changePasswordDescription": "最終更新は3か月前",
+        "update": "更新"
+      }
+    },
+    "appPreferences": {
+      "title": "アプリ設定",
+      "subtitle": "現在の設定の概要",
+      "notifications": "通知",
+      "enabled": "有効",
+      "defaultCurrency": "デフォルト通貨",
+      "loginSecurity": "ログインセキュリティ",
+      "biometric": "生体認証",
+      "themeMode": "テーマモード",
+      "light": "ライト"
+    },
+    "dangerZone": {
+      "title": "危険ゾーン",
+      "subtitle": "破壊的なアカウント操作は慎重に管理してください。",
+      "exportData": "すべての財務データをエクスポート",
+      "deleteAccount": "アカウントを削除"
+    },
+    "editProfile": {
+      "title": "プロフィールを編集",
+      "subtitle": "個人情報を更新してプロフィールに保存します。",
+      "close": "プロフィール編集フォームを閉じる",
+      "cancel": "キャンセル",
+      "saveChanges": "変更を保存"
+    }
+  },
+  "forms": {
+    "chooseFile": "ファイルを選択",
+    "selected": "選択済み:",
+    "selectPrompt": "{label}を選択",
+    "fields": {
+      "incomeTitle": "収入タイトル",
+      "expenseTitle": "支出タイトル",
+      "amount": "金額",
+      "source": "収入元",
+      "dateReceived": "受取日",
+      "dateSpent": "支出日",
+      "account": "口座",
+      "category": "カテゴリー",
+      "merchantOptional": "店舗名（任意）",
+      "title": "タイトル",
+      "type": "種類",
+      "date": "日付",
+      "notes": "メモ",
+      "firstName": "名",
+      "lastName": "姓",
+      "emailAddress": "メールアドレス"
+    },
+    "placeholders": {
+      "enterIncomeTitle": "収入タイトルを入力",
+      "enterExpenseTitle": "支出タイトルを入力",
+      "zeroAmount": "0.00",
+      "selectDate": "日付を選択",
+      "enterMerchantName": "店舗名を入力",
+      "enterTitle": "タイトルを入力",
+      "enterAmount": "金額を入力",
+      "addNotes": "メモを追加",
+      "enterFirstName": "名を入力",
+      "enterLastName": "姓を入力",
+      "enterEmailAddress": "メールアドレスを入力"
+    }
+  },
+  "options": {
+    "incomeSources": {
+      "business": "ビジネス",
+      "salary": "給与",
+      "freelance": "フリーランス",
+      "investment": "投資",
+      "other": "その他"
+    },
+    "expenseCategories": {
+      "food": "食費",
+      "transport": "交通",
+      "rent": "家賃",
+      "bills": "請求",
+      "health": "健康",
+      "personal": "個人",
+      "shopping": "買い物",
+      "other": "その他"
+    },
+    "accounts": {
+      "mainAccount": "メイン口座",
+      "savingsAccount": "貯蓄口座",
+      "cash": "現金",
+      "digitalAccount": "デジタル口座"
+    },
+    "currencies": {
+      "PHP": "フィリピン・ペソ",
+      "USD": "米ドル",
+      "EUR": "ユーロ",
+      "JPY": "日本円",
+      "GBP": "英ポンド",
+      "AUD": "豪ドル",
+      "CAD": "加ドル",
+      "SGD": "シンガポールドル",
+      "KRW": "韓国ウォン",
+      "CNY": "中国元"
+    },
+    "languageRegions": {
+      "en-PH": "英語 - フィリピン",
+      "en-US": "英語 - アメリカ合衆国",
+      "en-GB": "英語 - イギリス",
+      "ja-JP": "日本語 - 日本",
+      "ko-KR": "韓国語 - 韓国",
+      "zh-CN": "中国語 - 中国"
+    }
+  }
+}

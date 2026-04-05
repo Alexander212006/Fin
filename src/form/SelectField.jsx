@@ -1,3 +1,5 @@
+import { useI18n } from "../i18n";
+
 export const SelectField = ({
   label,
   icon: Icon,
@@ -5,7 +7,7 @@ export const SelectField = ({
   onChange,
   options,
 }) => {
-
+  const { t } = useI18n();
 
   return (
     <label className="block">
@@ -19,7 +21,7 @@ export const SelectField = ({
           onChange={onChange}
           className="w-full bg-transparent text-sm text-zinc-800 outline-none sm:text-base"
         > 
-        <option value="">Select a {label.toLowerCase()}</option>
+        <option value="">{t("forms.selectPrompt", "Select a {label}", { label: label.toLowerCase() })}</option>
           {options.map((option) => (
             <option key={option.value} value={option.value}>
               {option.label}

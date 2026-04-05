@@ -5,11 +5,35 @@ import {
   EDIT_TRANSACTION_FIELDS,
   getInitialEditTransactionValues,
 } from "../config/editTransactionFields";
+import { useI18n } from "../../../i18n";
 
 export const EditTransactionForm = ({ transaction, onSave, onCancel }) => {
+  const { t } = useI18n();
   const [formData, setFormData] = useState(() =>
     getInitialEditTransactionValues(transaction),
   );
+  const fields = EDIT_TRANSACTION_FIELDS.map((field) => ({
+    ...field,
+    label: t(
+      `forms.fields.${field.name === "source" ? "source" : field.name}`,
+      field.label,
+    ),
+    placeholder:
+      field.name === "title"
+        ? t("forms.placeholders.enterTitle", field.placeholder)
+        : field.name === "amount"
+          ? t("forms.placeholders.enterAmount", field.placeholder)
+          : field.name === "notes"
+            ? t("forms.placeholders.addNotes", field.placeholder)
+            : field.placeholder,
+    options:
+      field.name === "type"
+        ? [
+            { label: t("history.types.income", "Income"), value: "income" },
+            { label: t("history.types.expense", "Expense"), value: "expense" },
+          ]
+        : field.options,
+  }));
 
   const handleChange = (event) => {
     const { name, value } = event.target;
@@ -49,10 +73,10 @@ export const EditTransactionForm = ({ transaction, onSave, onCancel }) => {
             <div className="flex items-start justify-between gap-4 border-b border-zinc-200 px-4 py-4 sm:px-6 sm:py-5">
               <div>
                 <h2 className="text-xl font-semibold text-zinc-800 sm:text-2xl">
-                  Edit Transaction
+                  {t("dashboard.editTransaction.title")}
                 </h2>
                 <p className="mt-1 text-sm text-zinc-500">
-                  Update the transaction details below.
+                  {t("dashboard.editTransaction.subtitle")}
                 </p>
               </div>
 
@@ -60,7 +84,7 @@ export const EditTransactionForm = ({ transaction, onSave, onCancel }) => {
                 type="button"
                 onClick={onCancel}
                 className="rounded-xl p-2 text-zinc-500 transition hover:bg-zinc-100 hover:text-zinc-800"
-                aria-label="Close edit form"
+                aria-label={t("dashboard.editTransaction.close")}
               >
                 <X className="h-5 w-5" />
               </button>
@@ -68,7 +92,7 @@ export const EditTransactionForm = ({ transaction, onSave, onCancel }) => {
 
             <div className="overflow-y-auto px-4 py-4 sm:px-6 sm:py-5">
               <FormRenderer
-                fields={EDIT_TRANSACTION_FIELDS}
+                fields={fields}
                 values={formData}
                 onChange={handleChange}
                 idPrefix="edit-transaction"
@@ -81,14 +105,14 @@ export const EditTransactionForm = ({ transaction, onSave, onCancel }) => {
                 onClick={onCancel}
                 className="w-full rounded-2xl border border-zinc-300 px-5 py-3 text-sm font-medium text-zinc-700 transition hover:bg-zinc-100 sm:w-auto sm:text-base"
               >
-                Cancel
+                {t("dashboard.editTransaction.cancel")}
               </button>
 
               <button
                 type="submit"
                 className="w-full rounded-2xl bg-sky-600 px-5 py-3 text-sm font-medium text-white transition hover:bg-sky-700 sm:w-auto sm:text-base"
               >
-                Save Changes
+                {t("dashboard.editTransaction.saveChanges")}
               </button>
             </div>
           </form>

@@ -1,0 +1,255 @@
+{
+  "app": {
+    "name": "Fin"
+  },
+  "nav": {
+    "dashboard": "仪表板",
+    "addIncome": "添加收入",
+    "addExpense": "添加支出",
+    "history": "记录",
+    "settings": "设置"
+  },
+  "header": {
+    "menu": "菜单",
+    "openMenu": "打开菜单",
+    "closeMenu": "关闭菜单",
+    "welcomeBack": "欢迎回来",
+    "overview": "概览",
+    "notifications": "通知",
+    "premiumAccount": "高级账户"
+  },
+  "dashboard": {
+    "title": "概览",
+    "myBalance": "我的余额",
+    "balanceOverview": "账户余额概览",
+    "budgetOverview": "预算概览",
+    "income": "收入",
+    "expense": "支出",
+    "transactionHistory": "交易记录",
+    "showAll": "查看全部",
+    "today": "今天",
+    "noTransactions": "还没有交易记录。",
+    "actions": {
+      "addAgain": "再次添加",
+      "edit": "编辑",
+      "delete": "删除"
+    },
+    "editTransaction": {
+      "title": "编辑交易",
+      "subtitle": "请在下方更新交易详情。",
+      "cancel": "取消",
+      "saveChanges": "保存更改",
+      "close": "关闭编辑表单"
+    }
+  },
+  "history": {
+    "title": "记录",
+    "subtitle": "在一个页面中查看你记录的所有交易。",
+    "totalEntries": "总条目数",
+    "transactionsRecordedThisMonth": "本月记录的交易",
+    "totalIncome": "总收入",
+    "incomeTransactions": "笔收入交易",
+    "totalExpense": "总支出",
+    "expenseTransactions": "笔支出交易",
+    "recentTransactions": "最近交易",
+    "showingTransactionsThisMonth": "正在显示本月 {count} 笔交易",
+    "export": "导出",
+    "noTransactionsThisMonth": "本月还没有记录任何交易。",
+    "searchTransaction": "搜索交易",
+    "allAccounts": "所有账户",
+    "tableHeaders": {
+      "transaction": "交易",
+      "category": "类别",
+      "account": "账户",
+      "date": "日期",
+      "type": "类型",
+      "amount": "金额"
+    },
+    "types": {
+      "all": "所有类型",
+      "income": "收入",
+      "expense": "支出"
+    },
+    "emptyValue": "无"
+  },
+  "addIncome": {
+    "title": "添加收入",
+    "subtitle": "记录一笔新的收入并保持余额更新。",
+    "badge": "已自动分类",
+    "detailsTitle": "收入详情",
+    "detailsSubtitle": "请填写下面的表单字段",
+    "notes": "备注（可选）",
+    "notesPlaceholder": "添加简短备注",
+    "attachTitle": "附上付款证明（可选）",
+    "attachSubtitle": "上传收据、发票或交易截图。",
+    "saveDraft": "保存草稿",
+    "submit": "添加收入",
+    "quickTips": "快速提示",
+    "tips": {
+      "clearTitles": "使用清晰的标题，例如客户名称或付款来源。",
+      "addNotes": "添加备注，方便以后查看交易记录。",
+      "keepReceipts": "保留收据或截图以便对账。"
+    }
+  },
+  "addExpense": {
+    "title": "添加支出",
+    "subtitle": "记录一笔新的支出并保持支出记录更新。",
+    "badge": "预算已跟踪",
+    "detailsTitle": "支出详情",
+    "detailsSubtitle": "请填写下面的表单字段",
+    "notes": "备注（可选）",
+    "notesPlaceholder": "添加简短备注",
+    "attachTitle": "附上收据（可选）",
+    "attachSubtitle": "上传收据、发票或付款确认。",
+    "saveDraft": "保存草稿",
+    "submit": "添加支出",
+    "quickTips": "快速提示",
+    "tips": {
+      "pickCategory": "选择正确的类别以保持报表准确。",
+      "addMerchant": "添加商家名称，方便以后搜索交易记录。",
+      "keepReceipts": "保留收据以便与记录的支出核对。"
+    }
+  },
+  "settings": {
+    "title": "设置",
+    "subtitle": "管理你的账户、偏好、安全和应用行为。",
+    "sections": {
+      "profile": {
+        "title": "个人资料",
+        "subtitle": "基本账户信息和货币偏好",
+        "profileInformation": "个人资料信息",
+        "defaultCurrency": "默认货币",
+        "languageRegion": "语言和地区",
+        "edit": "编辑"
+      },
+      "notifications": {
+        "title": "通知",
+        "subtitle": "控制提醒和账户通知",
+        "pushNotifications": "推送通知",
+        "pushNotificationsDescription": "接收交易和账户活动提醒",
+        "budgetAlerts": "预算提醒",
+        "budgetAlertsDescription": "当支出接近限额时收到通知"
+      },
+      "appearance": {
+        "title": "外观",
+        "subtitle": "自定义应用在设备上的显示方式",
+        "darkMode": "深色模式",
+        "darkModeDescription": "在浅色和深色外观之间切换",
+        "accentColor": "强调色",
+        "accentColorDescription": "适合简洁仪表板风格的中性灰主题"
+      },
+      "security": {
+        "title": "安全",
+        "subtitle": "保护你的账户和敏感财务数据",
+        "changePassword": "更改密码",
+        "changePasswordDescription": "上次更新于 3 个月前",
+        "update": "更新"
+      }
+    },
+    "appPreferences": {
+      "title": "应用偏好",
+      "subtitle": "当前设置快速概览",
+      "notifications": "通知",
+      "enabled": "已启用",
+      "defaultCurrency": "默认货币",
+      "loginSecurity": "登录安全",
+      "biometric": "生物识别",
+      "themeMode": "主题模式",
+      "light": "浅色"
+    },
+    "dangerZone": {
+      "title": "危险区域",
+      "subtitle": "请谨慎管理可能造成破坏的账户操作。",
+      "exportData": "导出所有财务数据",
+      "deleteAccount": "删除账户"
+    },
+    "editProfile": {
+      "title": "编辑个人资料",
+      "subtitle": "更新你的个人信息并保存到个人资料中。",
+      "close": "关闭编辑个人资料表单",
+      "cancel": "取消",
+      "saveChanges": "保存更改"
+    }
+  },
+  "forms": {
+    "chooseFile": "选择文件",
+    "selected": "已选择：",
+    "selectPrompt": "选择{label}",
+    "fields": {
+      "incomeTitle": "收入标题",
+      "expenseTitle": "支出标题",
+      "amount": "金额",
+      "source": "来源",
+      "dateReceived": "收款日期",
+      "dateSpent": "支出日期",
+      "account": "账户",
+      "category": "类别",
+      "merchantOptional": "商家（可选）",
+      "title": "标题",
+      "type": "类型",
+      "date": "日期",
+      "notes": "备注",
+      "firstName": "名字",
+      "lastName": "姓氏",
+      "emailAddress": "电子邮箱地址"
+    },
+    "placeholders": {
+      "enterIncomeTitle": "输入收入标题",
+      "enterExpenseTitle": "输入支出标题",
+      "zeroAmount": "0.00",
+      "selectDate": "选择日期",
+      "enterMerchantName": "输入商家名称",
+      "enterTitle": "输入标题",
+      "enterAmount": "输入金额",
+      "addNotes": "添加备注",
+      "enterFirstName": "输入名字",
+      "enterLastName": "输入姓氏",
+      "enterEmailAddress": "输入电子邮箱地址"
+    }
+  },
+  "options": {
+    "incomeSources": {
+      "business": "商业",
+      "salary": "工资",
+      "freelance": "自由职业",
+      "investment": "投资",
+      "other": "其他"
+    },
+    "expenseCategories": {
+      "food": "餐饮",
+      "transport": "交通",
+      "rent": "房租",
+      "bills": "账单",
+      "health": "健康",
+      "personal": "个人",
+      "shopping": "购物",
+      "other": "其他"
+    },
+    "accounts": {
+      "mainAccount": "主账户",
+      "savingsAccount": "储蓄账户",
+      "cash": "现金",
+      "digitalAccount": "数字账户"
+    },
+    "currencies": {
+      "PHP": "菲律宾比索",
+      "USD": "美元",
+      "EUR": "欧元",
+      "JPY": "日元",
+      "GBP": "英镑",
+      "AUD": "澳元",
+      "CAD": "加元",
+      "SGD": "新加坡元",
+      "KRW": "韩元",
+      "CNY": "人民币"
+    },
+    "languageRegions": {
+      "en-PH": "英语 - 菲律宾",
+      "en-US": "英语 - 美国",
+      "en-GB": "英语 - 英国",
+      "ja-JP": "日语 - 日本",
+      "ko-KR": "韩语 - 韩国",
+      "zh-CN": "中文 - 中国"
+    }
+  }
+}
