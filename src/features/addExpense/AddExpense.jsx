@@ -2,28 +2,72 @@ import { Check, Image, Receipt } from "lucide-react";
 import { FileUpload } from "../../form/FileUpload";
 import { expenseFieldConfig } from "./config/formFields";
 import { useExpenseForm } from "./hooks/useExpenseForm";
+import { useI18n } from "../../i18n";
 
 export const AddExpense = ({ setTransactions, toast }) => {
+  const { t } = useI18n();
   const { form, setFile, updateField, handleSubmit } = useExpenseForm({
     toast,
     setTransactions,
   });
+  const fields = expenseFieldConfig.map((field) => ({
+    ...field,
+    props: {
+      ...field.props,
+      label:
+        field.name === "title"
+          ? t("forms.fields.expenseTitle", field.props.label)
+          : field.name === "amount"
+            ? t("forms.fields.amount", field.props.label)
+            : field.name === "category"
+              ? t("forms.fields.category", field.props.label)
+              : field.name === "date"
+                ? t("forms.fields.dateSpent", field.props.label)
+                : field.name === "account"
+                  ? t("forms.fields.account", field.props.label)
+                  : field.name === "merchant"
+                    ? t("forms.fields.merchantOptional", field.props.label)
+                    : field.props.label,
+      placeholder:
+        field.name === "title"
+          ? t("forms.placeholders.enterExpenseTitle", field.props.placeholder)
+          : field.name === "amount"
+            ? t("forms.placeholders.zeroAmount", field.props.placeholder)
+            : field.name === "date"
+              ? t("forms.placeholders.selectDate", field.props.placeholder)
+              : field.name === "merchant"
+                ? t("forms.placeholders.enterMerchantName", field.props.placeholder)
+                : field.props.placeholder,
+      options:
+        field.name === "category"
+          ? field.props.options.map((option) => ({
+              ...option,
+              label: t(`options.expenseCategories.${option.value}`, option.label),
+            }))
+          : field.name === "account"
+            ? field.props.options.map((option) => ({
+                ...option,
+                label: t(`options.accounts.${option.value}`, option.label),
+              }))
+            : field.props.options,
+    },
+  }));
 
   return (
     <section>
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-3xl font-semibold tracking-tight text-zinc-800 sm:text-[42px]">
-            Add expense
+            {t("addExpense.title")}
           </h2>
           <p className="mt-2 text-sm text-zinc-500 sm:text-base">
-            Log a new expense and keep your spending records updated.
+            {t("addExpense.subtitle")}
           </p>
         </div>
 
         <div className="flex items-center gap-3 self-start rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-rose-600">
           <Check className="h-5 w-5" />
-          <span className="text-sm font-medium">Budget tracked</span>
+          <span className="text-sm font-medium">{t("addExpense.badge")}</span>
         </div>
       </div>
 
@@ -38,16 +82,16 @@ export const AddExpense = ({ setTransactions, toast }) => {
             </div>
             <div>
               <h3 className="text-2xl font-medium text-zinc-800">
-                Expense details
+                {t("addExpense.detailsTitle")}
               </h3>
               <p className="text-sm text-zinc-500">
-                Fill in the form fields below
+                {t("addExpense.detailsSubtitle")}
               </p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-            {expenseFieldConfig.map(
+            {fields.map(
               ({ name, component: Component, props, colSpan }) => (
                 <div key={name} className={colSpan}>
                   <Component
@@ -62,7 +106,7 @@ export const AddExpense = ({ setTransactions, toast }) => {
             <div className="sm:col-span-2">
               <label className="block">
                 <span className="mb-3 block text-sm font-medium text-zinc-700 sm:text-base">
-                  Notes(optional)
+                  {t("addExpense.notes")}
                 </span>
                 <div className="rounded-2xl border border-zinc-200 bg-[#fafafa] px-4 py-3 transition focus-within:border-zinc-300 focus-within:bg-white">
                   <textarea
@@ -71,7 +115,7 @@ export const AddExpense = ({ setTransactions, toast }) => {
                     onChange={(e) => {
                       updateField("notes", e.target.value);
                     }}
-                    placeholder="Add a short note"
+                    placeholder={t("addExpense.notesPlaceholder")}
                     className="w-full resize-none bg-transparent text-sm text-zinc-800 outline-none placeholder:text-zinc-400 sm:text-base"
                   />
                 </div>
@@ -87,10 +131,10 @@ export const AddExpense = ({ setTransactions, toast }) => {
                 </div>
                 <div>
                   <h4 className="font-medium text-zinc-800">
-                    Attach receipt(optional)
+                    {t("addExpense.attachTitle")}
                   </h4>
                   <p className="mt-1 text-sm text-zinc-500">
-                    Upload a receipt, invoice, or payment confirmation.
+                    {t("addExpense.attachSubtitle")}
                   </p>
                 </div>
               </div>
@@ -101,29 +145,29 @@ export const AddExpense = ({ setTransactions, toast }) => {
 
           <div className="mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
             <button className="rounded-2xl border border-zinc-200 bg-white px-5 py-3 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50 sm:text-base">
-              Save as draft
+              {t("addExpense.saveDraft")}
             </button>
             <button
               className="rounded-2xl bg-zinc-900 px-5 py-3 text-sm font-medium text-white transition hover:bg-zinc-800 sm:text-base"
               type="submit"
             >
-              Add expense
+              {t("addExpense.submit")}
             </button>
           </div>
         </form>
 
         <div className="space-y-6">
           <div className="rounded-[30px] border border-zinc-200 bg-white p-6 sm:p-7">
-            <h3 className="text-2xl font-medium text-zinc-800">Quick tips</h3>
+            <h3 className="text-2xl font-medium text-zinc-800">{t("addExpense.quickTips")}</h3>
             <div className="mt-5 space-y-4 text-sm text-zinc-600 sm:text-base">
               <div className="rounded-2xl bg-[#f7f7f7] p-4">
-                Pick the right category to keep reports accurate.
+                {t("addExpense.tips.pickCategory")}
               </div>
               <div className="rounded-2xl bg-[#f7f7f7] p-4">
-                Add merchant names for easier history search later.
+                {t("addExpense.tips.addMerchant")}
               </div>
               <div className="rounded-2xl bg-[#f7f7f7] p-4">
-                Keep receipts to match your recorded expenses.
+                {t("addExpense.tips.keepReceipts")}
               </div>
             </div>
           </div>

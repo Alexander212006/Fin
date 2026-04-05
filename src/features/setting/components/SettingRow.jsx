@@ -1,5 +1,3 @@
-import { Icon } from "lucide-react";
-
 export const SettingRow = ({
   icon: Icon,
   title,
@@ -9,7 +7,9 @@ export const SettingRow = ({
 }) => {
   return (
     <div
-      className={`flex items-center justify-between gap-4 py-4 ${noBorder ? "" : "border-b border-zinc-200"}`}
+      className={`flex items-center justify-between gap-4 py-4 ${
+        noBorder ? "" : "border-b border-zinc-200"
+      }`}
     >
       <div className="flex min-w-0 items-start gap-4">
         <div className="rounded-2xl bg-[#f7f7f7] p-3 text-zinc-600">

@@ -1,5 +1,6 @@
 import { MoreHorizontal, TrendingDown, TrendingUp } from "lucide-react";
 import { formatCompactPeso } from "../../../utils/currency";
+import { useI18n } from "../../../i18n";
 
 export const TransactionHistoryItem = ({
   transaction,
@@ -8,7 +9,10 @@ export const TransactionHistoryItem = ({
   menuRef,
   onToggleMenu,
   onAction,
+  currency,
+  languageRegion
 }) => {
+  const { t } = useI18n();
   const isIncome = transaction.type === "income";
   const Icon = isIncome ? TrendingUp : TrendingDown;
   const dotColor = isIncome ? "bg-emerald-500" : "bg-rose-500";
@@ -39,14 +43,14 @@ export const TransactionHistoryItem = ({
           isIncome ? "text-emerald-500" : "text-rose-500"
         }`}
       >
-        {formatCompactPeso(transaction.amount, transaction.type)}
+        {formatCompactPeso(transaction.amount, transaction.type, currency, languageRegion)}
       </p>
 
       <div className="relative" ref={menuRef}>
         <button
           onClick={onToggleMenu}
           className="rounded-lg p-1 text-zinc-500 transition hover:bg-zinc-100 hover:text-zinc-800"
-          aria-label={`Open actions for ${transaction.title}`}
+          aria-label={`${t("dashboard.actions.edit")} ${transaction.title}`}
           aria-expanded={isMenuOpen}
           aria-haspopup="menu"
         >

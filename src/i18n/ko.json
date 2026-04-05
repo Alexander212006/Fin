@@ -1,0 +1,255 @@
+{
+  "app": {
+    "name": "Fin"
+  },
+  "nav": {
+    "dashboard": "대시보드",
+    "addIncome": "수입 추가",
+    "addExpense": "지출 추가",
+    "history": "내역",
+    "settings": "설정"
+  },
+  "header": {
+    "menu": "메뉴",
+    "openMenu": "메뉴 열기",
+    "closeMenu": "메뉴 닫기",
+    "welcomeBack": "다시 오신 것을 환영합니다",
+    "overview": "개요",
+    "notifications": "알림",
+    "premiumAccount": "프리미엄 계정"
+  },
+  "dashboard": {
+    "title": "개요",
+    "myBalance": "내 잔액",
+    "balanceOverview": "계좌 잔액 개요",
+    "budgetOverview": "예산 개요",
+    "income": "수입",
+    "expense": "지출",
+    "transactionHistory": "거래 내역",
+    "showAll": "모두 보기",
+    "today": "오늘",
+    "noTransactions": "아직 거래가 없습니다.",
+    "actions": {
+      "addAgain": "다시 추가",
+      "edit": "수정",
+      "delete": "삭제"
+    },
+    "editTransaction": {
+      "title": "거래 수정",
+      "subtitle": "아래에서 거래 세부 정보를 수정하세요.",
+      "cancel": "취소",
+      "saveChanges": "변경 사항 저장",
+      "close": "거래 수정 폼 닫기"
+    }
+  },
+  "history": {
+    "title": "내역",
+    "subtitle": "기록된 모든 거래를 한 곳에서 확인하세요.",
+    "totalEntries": "총 항목 수",
+    "transactionsRecordedThisMonth": "이번 달 기록된 거래",
+    "totalIncome": "총수입",
+    "incomeTransactions": "건의 수입 거래",
+    "totalExpense": "총지출",
+    "expenseTransactions": "건의 지출 거래",
+    "recentTransactions": "최근 거래",
+    "showingTransactionsThisMonth": "이번 달 거래 {count}건 표시 중",
+    "export": "내보내기",
+    "noTransactionsThisMonth": "이번 달에는 아직 기록된 거래가 없습니다.",
+    "searchTransaction": "거래 검색",
+    "allAccounts": "모든 계좌",
+    "tableHeaders": {
+      "transaction": "거래",
+      "category": "카테고리",
+      "account": "계좌",
+      "date": "날짜",
+      "type": "유형",
+      "amount": "금액"
+    },
+    "types": {
+      "all": "모든 유형",
+      "income": "수입",
+      "expense": "지출"
+    },
+    "emptyValue": "없음"
+  },
+  "addIncome": {
+    "title": "수입 추가",
+    "subtitle": "새 수입 항목을 기록하고 잔액을 최신 상태로 유지하세요.",
+    "badge": "자동 분류됨",
+    "detailsTitle": "수입 세부 정보",
+    "detailsSubtitle": "아래 양식 항목을 입력하세요",
+    "notes": "메모(선택)",
+    "notesPlaceholder": "짧은 메모 추가",
+    "attachTitle": "지급 증빙 첨부(선택)",
+    "attachSubtitle": "영수증, 청구서 또는 거래 스크린샷을 업로드하세요.",
+    "saveDraft": "임시 저장",
+    "submit": "수입 추가",
+    "quickTips": "빠른 팁",
+    "tips": {
+      "clearTitles": "고객명이나 수입 출처처럼 명확한 제목을 사용하세요.",
+      "addNotes": "나중에 거래 내역을 더 쉽게 확인할 수 있도록 메모를 추가하세요.",
+      "keepReceipts": "대조를 위해 영수증이나 스크린샷을 보관하세요."
+    }
+  },
+  "addExpense": {
+    "title": "지출 추가",
+    "subtitle": "새 지출을 기록하고 지출 내역을 최신 상태로 유지하세요.",
+    "badge": "예산 추적 중",
+    "detailsTitle": "지출 세부 정보",
+    "detailsSubtitle": "아래 양식 항목을 입력하세요",
+    "notes": "메모(선택)",
+    "notesPlaceholder": "짧은 메모 추가",
+    "attachTitle": "영수증 첨부(선택)",
+    "attachSubtitle": "영수증, 청구서 또는 결제 확인서를 업로드하세요.",
+    "saveDraft": "임시 저장",
+    "submit": "지출 추가",
+    "quickTips": "빠른 팁",
+    "tips": {
+      "pickCategory": "보고서가 정확하도록 올바른 카테고리를 선택하세요.",
+      "addMerchant": "나중에 거래 내역을 쉽게 찾을 수 있도록 상점 이름을 추가하세요.",
+      "keepReceipts": "기록한 지출과 맞출 수 있도록 영수증을 보관하세요."
+    }
+  },
+  "settings": {
+    "title": "설정",
+    "subtitle": "계정, 환경설정, 보안 및 앱 동작을 관리하세요.",
+    "sections": {
+      "profile": {
+        "title": "프로필",
+        "subtitle": "기본 계정 정보 및 통화 설정",
+        "profileInformation": "프로필 정보",
+        "defaultCurrency": "기본 통화",
+        "languageRegion": "언어 및 지역",
+        "edit": "수정"
+      },
+      "notifications": {
+        "title": "알림",
+        "subtitle": "리마인더와 계정 알림을 관리하세요",
+        "pushNotifications": "푸시 알림",
+        "pushNotificationsDescription": "거래 및 계정 활동 알림을 받습니다",
+        "budgetAlerts": "예산 알림",
+        "budgetAlertsDescription": "지출이 한도에 가까워지면 알림을 받습니다"
+      },
+      "appearance": {
+        "title": "화면",
+        "subtitle": "기기에서 앱의 모양을 사용자 지정하세요",
+        "darkMode": "다크 모드",
+        "darkModeDescription": "밝은 모드와 어두운 모드를 전환합니다",
+        "accentColor": "강조 색상",
+        "accentColorDescription": "깔끔한 대시보드 스타일의 중립 회색 테마"
+      },
+      "security": {
+        "title": "보안",
+        "subtitle": "계정과 민감한 금융 데이터를 보호하세요",
+        "changePassword": "비밀번호 변경",
+        "changePasswordDescription": "마지막 업데이트: 3개월 전",
+        "update": "업데이트"
+      }
+    },
+    "appPreferences": {
+      "title": "앱 환경설정",
+      "subtitle": "현재 설정 빠른 개요",
+      "notifications": "알림",
+      "enabled": "사용",
+      "defaultCurrency": "기본 통화",
+      "loginSecurity": "로그인 보안",
+      "biometric": "생체 인증",
+      "themeMode": "테마 모드",
+      "light": "라이트"
+    },
+    "dangerZone": {
+      "title": "위험 구역",
+      "subtitle": "파괴적인 계정 작업은 신중하게 관리하세요.",
+      "exportData": "모든 금융 데이터 내보내기",
+      "deleteAccount": "계정 삭제"
+    },
+    "editProfile": {
+      "title": "프로필 수정",
+      "subtitle": "개인 정보를 업데이트하고 프로필에 저장하세요.",
+      "close": "프로필 수정 폼 닫기",
+      "cancel": "취소",
+      "saveChanges": "변경 사항 저장"
+    }
+  },
+  "forms": {
+    "chooseFile": "파일 선택",
+    "selected": "선택됨:",
+    "selectPrompt": "{label} 선택",
+    "fields": {
+      "incomeTitle": "수입 제목",
+      "expenseTitle": "지출 제목",
+      "amount": "금액",
+      "source": "출처",
+      "dateReceived": "수령일",
+      "dateSpent": "지출일",
+      "account": "계좌",
+      "category": "카테고리",
+      "merchantOptional": "가맹점(선택)",
+      "title": "제목",
+      "type": "유형",
+      "date": "날짜",
+      "notes": "메모",
+      "firstName": "이름",
+      "lastName": "성",
+      "emailAddress": "이메일 주소"
+    },
+    "placeholders": {
+      "enterIncomeTitle": "수입 제목 입력",
+      "enterExpenseTitle": "지출 제목 입력",
+      "zeroAmount": "0.00",
+      "selectDate": "날짜 선택",
+      "enterMerchantName": "가맹점 이름 입력",
+      "enterTitle": "제목 입력",
+      "enterAmount": "금액 입력",
+      "addNotes": "메모 추가",
+      "enterFirstName": "이름 입력",
+      "enterLastName": "성 입력",
+      "enterEmailAddress": "이메일 주소 입력"
+    }
+  },
+  "options": {
+    "incomeSources": {
+      "business": "사업",
+      "salary": "급여",
+      "freelance": "프리랜스",
+      "investment": "투자",
+      "other": "기타"
+    },
+    "expenseCategories": {
+      "food": "식비",
+      "transport": "교통",
+      "rent": "임대료",
+      "bills": "공과금",
+      "health": "건강",
+      "personal": "개인",
+      "shopping": "쇼핑",
+      "other": "기타"
+    },
+    "accounts": {
+      "mainAccount": "주 계좌",
+      "savingsAccount": "저축 계좌",
+      "cash": "현금",
+      "digitalAccount": "디지털 계좌"
+    },
+    "currencies": {
+      "PHP": "필리핀 페소",
+      "USD": "미국 달러",
+      "EUR": "유로",
+      "JPY": "일본 엔",
+      "GBP": "영국 파운드",
+      "AUD": "호주 달러",
+      "CAD": "캐나다 달러",
+      "SGD": "싱가포르 달러",
+      "KRW": "대한민국 원",
+      "CNY": "중국 위안"
+    },
+    "languageRegions": {
+      "en-PH": "영어 - 필리핀",
+      "en-US": "영어 - 미국",
+      "en-GB": "영어 - 영국",
+      "ja-JP": "일본어 - 일본",
+      "ko-KR": "한국어 - 대한민국",
+      "zh-CN": "중국어 - 중국"
+    }
+  }
+}

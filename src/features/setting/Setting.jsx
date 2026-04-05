@@ -3,6 +3,7 @@ import {
   Bell,
   ChevronRight,
   Globe,
+  Languages,
   Lock,
   Moon,
   Palette,
@@ -17,6 +18,8 @@ import { SectionCard } from "./components/SectionCard";
 import { SettingRow } from "./components/SettingRow";
 import { Toggle } from "./components/Toggle";
 import { setInitialUserProfile } from "./utils/setInitialUserProfile";
+import { CURRENCIES, LANGUAGE_REGIONS } from "../../constants/currencies";
+import { useI18n } from "../../i18n";
 
 const user = {
   userId: crypto.randomUUID(),
@@ -25,7 +28,10 @@ const user = {
   email: "alex@gmail.com",
 };
 
-export const Setting = () => {
+
+
+export const Setting = ({ currency, setCurrency, languageRegion, setLanguageRegion}) => {
+  const { t } = useI18n();
   const [notifications, setNotifications] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
   const [budgetAlerts, setBudgetAlerts] = useState(true);
@@ -33,6 +39,12 @@ export const Setting = () => {
     setInitialUserProfile(user),
   );
   const [isEditingProfile, setIsEditingProfile] = useState(false);
+
+
+  const selectedCurrency =
+    CURRENCIES.find(({ code }) => code === currency) ?? CURRENCIES[0];
+    
+  const selectedLanguageRegion = LANGUAGE_REGIONS.find(({value}) => value === languageRegion) ?? LANGUAGE_REGIONS[0];
 
   const handleSaveEdit = (updatedProfile) => {
     setCurrentUser((previousUser) => ({
@@ -42,67 +54,103 @@ export const Setting = () => {
     setIsEditingProfile(false);
   };
 
+  const handleCurrencyChange = (event) => {
+    setCurrency(event.target.value);
+  };
+
+  const hadleLanguageRegionChange = (event) => {
+    setLanguageRegion(event.target.value);
+  };
   return (
     <section>
       <div className="mb-6">
         <h2 className="text-3xl font-semibold tracking-tight text-zinc-800 sm:text-[42px]">
-          Settings
+          {t("settings.title")}
         </h2>
         <p className="mt-2 text-sm text-zinc-500 sm:text-base">
-          Manage your account, preferences, security, and app behavior.
+          {t("settings.subtitle")}
         </p>
       </div>
 
-      {isEditingProfile ? (
+      {isEditingProfile && (
         <EditProfileForm
           currentUser={currentUser}
           onSave={handleSaveEdit}
           onCancel={() => setIsEditingProfile(false)}
         />
-      ) : null}
+      )}
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_340px]">
         <div className="space-y-6">
           <SectionCard
-            title="Profile"
-            subtitle="Basic account information and currency preferences"
+            title={t("settings.sections.profile.title")}
+            subtitle={t("settings.sections.profile.subtitle")}
           >
             <SettingRow
               icon={User}
-              title="Profile information"
+              title={t("settings.sections.profile.profileInformation")}
               description={`${currentUser.firstName} ${currentUser.lastName} • ${currentUser.email}`}
               action={
                 <button
                   className="rounded-2xl border border-zinc-200 bg-[#fafafa] px-4 py-2 text-sm font-medium text-zinc-700"
                   onClick={() => setIsEditingProfile(true)}
                 >
-                  Edit
+                  {t("settings.sections.profile.edit")}
                 </button>
               }
             />
             <SettingRow
               icon={Wallet}
-              title="Default currency"
-              description="Philippine Peso (PHP)"
-              action={<ChevronRight className="h-5 w-5 text-zinc-400" />}
+              title={t("settings.sections.profile.defaultCurrency")}
+              description={`${selectedCurrency.name} (${selectedCurrency.code})`}
+              action={
+                <select
+                  value={currency}
+                  onChange={handleCurrencyChange}
+                  onClick={(event) => event.stopPropagation()}
+                  className="rounded-2xl border border-zinc-200 bg-[#fafafa] px-3 py-2 text-sm font-medium text-zinc-700 outline-none transition focus:border-zinc-400"
+                >
+                  {CURRENCIES.map(({ code, name }) => (
+                    <option key={code} value={code}>
+                      {t(`options.currencies.${code}`, name)} ({code})
+                    </option>
+                  ))}
+                </select>
+              }
             />
             <SettingRow
               icon={Globe}
-              title="Language & region"
-              description="English • Philippines"
-              action={<ChevronRight className="h-5 w-5 text-zinc-400" />}
+              title={t("settings.sections.profile.languageRegion")}
+              description={t(
+                `options.languageRegions.${selectedLanguageRegion.value}`,
+                selectedLanguageRegion.label,
+              )}
+              action={
+                <select
+                  value={languageRegion}
+                  onChange={hadleLanguageRegionChange}
+                  onClick={(event) => event.stopPropagation()}
+                  className="rounded-2xl border border-zinc-200 bg-[#fafafa] px-3 py-2 text-sm font-medium text-zinc-700 outline-none transition focus:border-zinc-400"
+                >
+                  {LANGUAGE_REGIONS.map(({ value, label }) => (
+                    <option key={value} value={value}>
+                      {t(`options.languageRegions.${value}`, label)}
+                    </option>
+                  ))}
+                </select>
+              }
               noBorder
             />
           </SectionCard>
 
           <SectionCard
-            title="Notifications"
-            subtitle="Control reminders and account alerts"
+            title={t("settings.sections.notifications.title")}
+            subtitle={t("settings.sections.notifications.subtitle")}
           >
             <SettingRow
               icon={Bell}
-              title="Push notifications"
-              description="Receive alerts for transactions and account activity"
+              title={t("settings.sections.notifications.pushNotifications")}
+              description={t("settings.sections.notifications.pushNotificationsDescription")}
               action={
                 <Toggle
                   enabled={notifications}
@@ -112,8 +160,8 @@ export const Setting = () => {
             />
             <SettingRow
               icon={ShieldCheck}
-              title="Budget alerts"
-              description="Get notified when spending is close to your limit"
+              title={t("settings.sections.notifications.budgetAlerts")}
+              description={t("settings.sections.notifications.budgetAlertsDescription")}
               action={
                 <Toggle
                   enabled={budgetAlerts}
@@ -125,13 +173,13 @@ export const Setting = () => {
           </SectionCard>
 
           <SectionCard
-            title="Appearance"
-            subtitle="Customize how the app looks on your device"
+            title={t("settings.sections.appearance.title")}
+            subtitle={t("settings.sections.appearance.subtitle")}
           >
             <SettingRow
               icon={Moon}
-              title="Dark mode"
-              description="Switch between light and dark appearance"
+              title={t("settings.sections.appearance.darkMode")}
+              description={t("settings.sections.appearance.darkModeDescription")}
               action={
                 <Toggle
                   enabled={darkMode}
@@ -141,24 +189,24 @@ export const Setting = () => {
             />
             <SettingRow
               icon={Palette}
-              title="Accent color"
-              description="Neutral gray theme with clean dashboard styling"
+              title={t("settings.sections.appearance.accentColor")}
+              description={t("settings.sections.appearance.accentColorDescription")}
               action={<ChevronRight className="h-5 w-5 text-zinc-400" />}
               noBorder
             />
           </SectionCard>
 
           <SectionCard
-            title="Security"
-            subtitle="Protect your account and sensitive financial data"
+            title={t("settings.sections.security.title")}
+            subtitle={t("settings.sections.security.subtitle")}
           >
             <SettingRow
               icon={Lock}
-              title="Change password"
-              description="Last updated 3 months ago"
+              title={t("settings.sections.security.changePassword")}
+              description={t("settings.sections.security.changePasswordDescription")}
               action={
                 <button className="rounded-2xl border border-zinc-200 bg-[#fafafa] px-4 py-2 text-sm font-medium text-zinc-700">
-                  Update
+                  {t("settings.sections.security.update")}
                 </button>
               }
               noBorder
@@ -174,45 +222,47 @@ export const Setting = () => {
               </div>
               <div>
                 <h3 className="text-2xl font-medium text-zinc-800">
-                  App preferences
+                  {t("settings.appPreferences.title")}
                 </h3>
                 <p className="text-sm text-zinc-500">
-                  Quick overview of your current setup
+                  {t("settings.appPreferences.subtitle")}
                 </p>
               </div>
             </div>
 
             <div className="space-y-3 text-sm sm:text-base">
               <div className="rounded-2xl bg-[#f7f7f7] p-4">
-                Notifications:{" "}
-                <span className="font-medium text-zinc-800">Enabled</span>
+                {t("settings.appPreferences.notifications")}:{" "}
+                <span className="font-medium text-zinc-800">{t("settings.appPreferences.enabled")}</span>
               </div>
               <div className="rounded-2xl bg-[#f7f7f7] p-4">
-                Default currency:{" "}
-                <span className="font-medium text-zinc-800">PHP</span>
+                {t("settings.appPreferences.defaultCurrency")}:{" "}
+                <span className="font-medium text-zinc-800">
+                  {selectedCurrency.code}
+                </span>
               </div>
               <div className="rounded-2xl bg-[#f7f7f7] p-4">
-                Login security:{" "}
-                <span className="font-medium text-zinc-800">Biometric</span>
+                {t("settings.appPreferences.loginSecurity")}:{" "}
+                <span className="font-medium text-zinc-800">{t("settings.appPreferences.biometric")}</span>
               </div>
               <div className="rounded-2xl bg-[#f7f7f7] p-4">
-                Theme mode:{" "}
-                <span className="font-medium text-zinc-800">Light</span>
+                {t("settings.appPreferences.themeMode")}:{" "}
+                <span className="font-medium text-zinc-800">{t("settings.appPreferences.light")}</span>
               </div>
             </div>
           </div>
 
           <div className="rounded-[30px] border border-zinc-200 bg-white p-6 sm:p-7">
-            <h3 className="text-2xl font-medium text-zinc-800">Danger zone</h3>
+            <h3 className="text-2xl font-medium text-zinc-800">{t("settings.dangerZone.title")}</h3>
             <p className="mt-2 text-sm text-zinc-500">
-              Manage destructive account actions carefully.
+              {t("settings.dangerZone.subtitle")}
             </p>
             <div className="mt-5 space-y-3">
               <button className="w-full rounded-2xl border border-zinc-200 bg-[#fafafa] px-4 py-3 text-left text-sm font-medium text-zinc-700 transition hover:bg-zinc-50">
-                Export all financial data
+                {t("settings.dangerZone.exportData")}
               </button>
               <button className="w-full rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-left text-sm font-medium text-rose-600 transition hover:bg-rose-100">
-                Delete account
+                {t("settings.dangerZone.deleteAccount")}
               </button>
             </div>
           </div>

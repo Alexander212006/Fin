@@ -1,17 +1,23 @@
 import { useState, useRef, useEffect } from "react";
 import { EditTransactionForm } from "./EditTransactionForm";
 import { TransactionHistoryItem } from "./TransactionHistoryItem";
+import { useI18n } from "../../../i18n";
 
-const transactionActions = [
-  { label: "Add again", key: "add-again" },
-  { label: "Edit", key: "edit" },
-  { label: "Delete", key: "delete", danger: true },
-];
-
-export const TransactionHistory = ({ transactions, setTransactions }) => {
+export const TransactionHistory = ({
+  transactions,
+  setTransactions,
+  currency,
+  languageRegion,
+}) => {
+  const { t } = useI18n();
   const [openMenuId, setOpenMenuId] = useState(null);
   const menuRef = useRef(null);
   const [editingTransaction, setEditingTransaction] = useState(null);
+  const transactionActions = [
+    { label: t("dashboard.actions.addAgain"), key: "add-again" },
+    { label: t("dashboard.actions.edit"), key: "edit" },
+    { label: t("dashboard.actions.delete"), key: "delete", danger: true },
+  ];
 
   useEffect(() => {
     if (openMenuId === null) {
@@ -93,15 +99,15 @@ export const TransactionHistory = ({ transactions, setTransactions }) => {
       <div className="mb-6 flex items-center justify-between gap-4">
         <div>
           <h3 className="text-2xl font-medium text-zinc-800">
-            Transaction history
+            {t("dashboard.transactionHistory")}
           </h3>
         </div>
         <button className="text-sm font-medium text-sky-600 hover:text-sky-700 sm:text-lg">
-          Show all
+          {t("dashboard.showAll")}
         </button>
       </div>
 
-      <p className="mb-6 text-lg text-zinc-600">Today</p>
+      <p className="mb-6 text-lg text-zinc-600">{t("dashboard.today")}</p>
 
       <div className="relative space-y-6">
         <div className="absolute bottom-3 left-1.5 top-3 w-px bg-zinc-300" />
@@ -115,12 +121,14 @@ export const TransactionHistory = ({ transactions, setTransactions }) => {
         )}
 
         {transactions.length === 0 ? (
-          <p className="text-center text-zinc-500">No transactions yet.</p>
+          <p className="text-center text-zinc-500">{t("dashboard.noTransactions")}</p>
         ) : (
           displayedTransactions.map((transaction) => (
             <TransactionHistoryItem
               key={transaction.id}
               transaction={transaction}
+              currency={currency}
+              languageRegion={languageRegion}
               actions={transactionActions}
               isMenuOpen={openMenuId === transaction.id}
               menuRef={openMenuId === transaction.id ? menuRef : null}

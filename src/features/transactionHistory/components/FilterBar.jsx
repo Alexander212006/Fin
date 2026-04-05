@@ -12,6 +12,7 @@ import {
   ALL_ACCOUNTS_VALUE,
   TRANSACTION_TYPE_OPTIONS,
 } from "../constants/transactionConstants";
+import { useI18n } from "../../../i18n";
 
 export const FilterBar = ({
   selectedDate,
@@ -23,6 +24,8 @@ export const FilterBar = ({
   searchTransaction,
   setSearchTransaction,
 }) => {
+  const { t } = useI18n();
+
   return (
     <div className="rounded-[28px] border border-zinc-200 bg-white p-4 sm:p-5">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
@@ -33,7 +36,7 @@ export const FilterBar = ({
             onChange={(e) => {
               setSearchTransaction(e.target.value);
             }}
-            placeholder="Search transaction"
+            placeholder={t("history.searchTransaction")}
             className="w-full bg-transparent text-sm text-zinc-800 outline-none placeholder:text-zinc-400 sm:text-base"
           />
         </div>
@@ -49,7 +52,9 @@ export const FilterBar = ({
             >
               {TRANSACTION_TYPE_OPTIONS.map((option) => (
                 <option key={option.value} value={option.value}>
-                  {option.label}
+                  {option.value === "all-types"
+                    ? t("history.types.all", option.label)
+                    : t(`history.types.${option.value}`, option.label)}
                 </option>
               ))}
             </select>
@@ -73,10 +78,10 @@ export const FilterBar = ({
               onChange={(e) => setSelectedAccount(e.target.value)}
               className="bg-transparent outline-none"
             >
-              <option value={ALL_ACCOUNTS_VALUE}>All Accounts</option>
+              <option value={ALL_ACCOUNTS_VALUE}>{t("history.allAccounts")}</option>
               {ACCOUNTS.map((account) => (
                 <option key={account.value} value={account.value}>
-                  {account.label}
+                  {t(`options.accounts.${account.value}`, account.label)}
                 </option>
               ))}
             </select>

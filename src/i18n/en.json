@@ -1,0 +1,255 @@
+{
+  "app": {
+    "name": "Fin"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "addIncome": "Add income",
+    "addExpense": "Add expense",
+    "history": "History",
+    "settings": "Settings"
+  },
+  "header": {
+    "menu": "Menu",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "welcomeBack": "Welcome back",
+    "overview": "Overview",
+    "notifications": "Notifications",
+    "premiumAccount": "Premium account"
+  },
+  "dashboard": {
+    "title": "Overview",
+    "myBalance": "My balance",
+    "balanceOverview": "Account balance overview",
+    "budgetOverview": "Budget Overview",
+    "income": "Income",
+    "expense": "Expense",
+    "transactionHistory": "Transaction history",
+    "showAll": "Show all",
+    "today": "Today",
+    "noTransactions": "No transactions yet.",
+    "actions": {
+      "addAgain": "Add again",
+      "edit": "Edit",
+      "delete": "Delete"
+    },
+    "editTransaction": {
+      "title": "Edit Transaction",
+      "subtitle": "Update the transaction details below.",
+      "cancel": "Cancel",
+      "saveChanges": "Save Changes",
+      "close": "Close edit form"
+    }
+  },
+  "history": {
+    "title": "History",
+    "subtitle": "Review all your recorded transactions in one place.",
+    "totalEntries": "Total entries",
+    "transactionsRecordedThisMonth": "Transactions recorded this month",
+    "totalIncome": "Total income",
+    "incomeTransactions": "income transactions",
+    "totalExpense": "Total expense",
+    "expenseTransactions": "expense transactions",
+    "recentTransactions": "Recent transactions",
+    "showingTransactionsThisMonth": "Showing {count} transaction{suffix} this month",
+    "export": "Export",
+    "noTransactionsThisMonth": "No transactions recorded for this month yet.",
+    "searchTransaction": "Search transaction",
+    "allAccounts": "All Accounts",
+    "tableHeaders": {
+      "transaction": "Transaction",
+      "category": "Category",
+      "account": "Account",
+      "date": "Date",
+      "type": "Type",
+      "amount": "Amount"
+    },
+    "types": {
+      "all": "All types",
+      "income": "Income",
+      "expense": "Expense"
+    },
+    "emptyValue": "N/A"
+  },
+  "addIncome": {
+    "title": "Add income",
+    "subtitle": "Record a new income entry and keep your balance updated.",
+    "badge": "Auto-categorized",
+    "detailsTitle": "Income details",
+    "detailsSubtitle": "Fill in the form fields below",
+    "notes": "Notes(optional)",
+    "notesPlaceholder": "Add a short note",
+    "attachTitle": "Attach proof of payment(optional)",
+    "attachSubtitle": "Upload receipt, invoice, or transaction screenshot.",
+    "saveDraft": "Save as draft",
+    "submit": "Add income",
+    "quickTips": "Quick tips",
+    "tips": {
+      "clearTitles": "Use clear titles like client name or payment source.",
+      "addNotes": "Add notes to make future history tracking easier.",
+      "keepReceipts": "Keep receipts or screenshots for reconciliation."
+    }
+  },
+  "addExpense": {
+    "title": "Add expense",
+    "subtitle": "Log a new expense and keep your spending records updated.",
+    "badge": "Budget tracked",
+    "detailsTitle": "Expense details",
+    "detailsSubtitle": "Fill in the form fields below",
+    "notes": "Notes(optional)",
+    "notesPlaceholder": "Add a short note",
+    "attachTitle": "Attach receipt(optional)",
+    "attachSubtitle": "Upload a receipt, invoice, or payment confirmation.",
+    "saveDraft": "Save as draft",
+    "submit": "Add expense",
+    "quickTips": "Quick tips",
+    "tips": {
+      "pickCategory": "Pick the right category to keep reports accurate.",
+      "addMerchant": "Add merchant names for easier history search later.",
+      "keepReceipts": "Keep receipts to match your recorded expenses."
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "subtitle": "Manage your account, preferences, security, and app behavior.",
+    "sections": {
+      "profile": {
+        "title": "Profile",
+        "subtitle": "Basic account information and currency preferences",
+        "profileInformation": "Profile information",
+        "defaultCurrency": "Default currency",
+        "languageRegion": "Language & region",
+        "edit": "Edit"
+      },
+      "notifications": {
+        "title": "Notifications",
+        "subtitle": "Control reminders and account alerts",
+        "pushNotifications": "Push notifications",
+        "pushNotificationsDescription": "Receive alerts for transactions and account activity",
+        "budgetAlerts": "Budget alerts",
+        "budgetAlertsDescription": "Get notified when spending is close to your limit"
+      },
+      "appearance": {
+        "title": "Appearance",
+        "subtitle": "Customize how the app looks on your device",
+        "darkMode": "Dark mode",
+        "darkModeDescription": "Switch between light and dark appearance",
+        "accentColor": "Accent color",
+        "accentColorDescription": "Neutral gray theme with clean dashboard styling"
+      },
+      "security": {
+        "title": "Security",
+        "subtitle": "Protect your account and sensitive financial data",
+        "changePassword": "Change password",
+        "changePasswordDescription": "Last updated 3 months ago",
+        "update": "Update"
+      }
+    },
+    "appPreferences": {
+      "title": "App preferences",
+      "subtitle": "Quick overview of your current setup",
+      "notifications": "Notifications",
+      "enabled": "Enabled",
+      "defaultCurrency": "Default currency",
+      "loginSecurity": "Login security",
+      "biometric": "Biometric",
+      "themeMode": "Theme mode",
+      "light": "Light"
+    },
+    "dangerZone": {
+      "title": "Danger zone",
+      "subtitle": "Manage destructive account actions carefully.",
+      "exportData": "Export all financial data",
+      "deleteAccount": "Delete account"
+    },
+    "editProfile": {
+      "title": "Edit profile",
+      "subtitle": "Update your personal details and save them to your profile.",
+      "close": "Close edit profile form",
+      "cancel": "Cancel",
+      "saveChanges": "Save changes"
+    }
+  },
+  "forms": {
+    "chooseFile": "Choose file",
+    "selected": "Selected:",
+    "selectPrompt": "Select a {label}",
+    "fields": {
+      "incomeTitle": "Income title",
+      "expenseTitle": "Expense title",
+      "amount": "Amount",
+      "source": "Source",
+      "dateReceived": "Date received",
+      "dateSpent": "Date spent",
+      "account": "Account",
+      "category": "Category",
+      "merchantOptional": "Merchant(optional)",
+      "title": "Title",
+      "type": "Type",
+      "date": "Date",
+      "notes": "Notes",
+      "firstName": "First name",
+      "lastName": "Last name",
+      "emailAddress": "Email address"
+    },
+    "placeholders": {
+      "enterIncomeTitle": "Enter income title",
+      "enterExpenseTitle": "Enter expense title",
+      "zeroAmount": "0.00",
+      "selectDate": "Select date",
+      "enterMerchantName": "Enter merchant name",
+      "enterTitle": "Enter title",
+      "enterAmount": "Enter amount",
+      "addNotes": "Add notes",
+      "enterFirstName": "Enter first name",
+      "enterLastName": "Enter last name",
+      "enterEmailAddress": "Enter email address"
+    }
+  },
+  "options": {
+    "incomeSources": {
+      "business": "Business",
+      "salary": "Salary",
+      "freelance": "Freelance",
+      "investment": "Investment",
+      "other": "Other"
+    },
+    "expenseCategories": {
+      "food": "Food",
+      "transport": "Transport",
+      "rent": "Rent",
+      "bills": "Bills",
+      "health": "Health",
+      "personal": "Personal",
+      "shopping": "Shopping",
+      "other": "Other"
+    },
+    "accounts": {
+      "mainAccount": "Main Account",
+      "savingsAccount": "Savings Account",
+      "cash": "Cash",
+      "digitalAccount": "Digital Account"
+    },
+    "currencies": {
+      "PHP": "Philippine Peso",
+      "USD": "US Dollar",
+      "EUR": "Euro",
+      "JPY": "Japanese Yen",
+      "GBP": "British Pound",
+      "AUD": "Australian Dollar",
+      "CAD": "Canadian Dollar",
+      "SGD": "Singapore Dollar",
+      "KRW": "South Korean Won",
+      "CNY": "Chinese Yuan"
+    },
+    "languageRegions": {
+      "en-PH": "English - Philippines",
+      "en-US": "English - United States",
+      "en-GB": "English - United Kingdom",
+      "ja-JP": "Japanese - Japan",
+      "ko-KR": "Korean - South Korea",
+      "zh-CN": "Chinese - China"
+    }
+  }
+}

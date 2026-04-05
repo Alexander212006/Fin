@@ -3,12 +3,17 @@ import { formatDate } from "../../../utils/date";
 import { ACCOUNTS } from "../../../constants/accounts";
 import { TrendingDown, TrendingUp } from "lucide-react";
 import { getTransactionAccount } from "../utils/buildTransactions";
+import { useI18n } from "../../../i18n";
 
-export const TransactionItem = ({ item }) => {
+export const TransactionItem = ({ item, currency, languageRegion }) => {
+  const { t } = useI18n();
   const isIncome = item.type === "income";
   const account = getTransactionAccount(item);
   const accountLabel =
-    ACCOUNTS.find((acc) => acc.value === account)?.label ?? "N/A";
+    t(
+      `options.accounts.${account}`,
+      ACCOUNTS.find((acc) => acc.value === account)?.label ?? t("history.emptyValue"),
+    );
 
   return (
     <tr className="border-t border-zinc-200 text-sm text-zinc-700">
@@ -30,7 +35,7 @@ export const TransactionItem = ({ item }) => {
           <span className="font-medium text-zinc-800">{item.title}</span>
         </div>
       </td>
-      <td className="px-5 py-4">{item.category || "N/A"}</td>
+      <td className="px-5 py-4">{item.category || t("history.emptyValue")}</td>
       <td className="px-5 py-4">{accountLabel}</td>
       <td className="px-5 py-4">{formatDate(item.date)}</td>
       <td className="px-5 py-4">
@@ -41,7 +46,7 @@ export const TransactionItem = ({ item }) => {
               : "bg-rose-50 text-rose-500"
           }`}
         >
-          {isIncome ? "Income" : "Expense"}
+          {isIncome ? t("history.types.income") : t("history.types.expense")}
         </span>
       </td>
       <td
@@ -50,7 +55,7 @@ export const TransactionItem = ({ item }) => {
         }`}
       >
         {isIncome ? "+" : "-"}
-        {formatCurrency(item.amount)}
+        {formatCurrency(item.amount, currency, languageRegion)}
       </td>
     </tr>
   );

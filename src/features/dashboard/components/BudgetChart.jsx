@@ -1,27 +1,31 @@
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+import { useI18n } from "../../../i18n";
+import { formatCurrency } from "../../../utils/currency";
 
 const COLORS = ["#10b981", "#ef4444"];
 
-export const BudgetChart = ({ transactions = [] }) => {
+export const BudgetChart = ({ transactions = [], currency, languageRegion }) => {
+  const { t } = useI18n();
+
   const data = [
     {
-      name: "Income",
+      name: t("dashboard.income"),
       value: transactions
-        .filter((t) => t.type === "income")
-        .reduce((sum, t) => sum + t.amount, 0),
+        .filter((transaction) => transaction.type === "income")
+        .reduce((sum, transaction) => sum + transaction.amount, 0),
     },
     {
-      name: "Expense",
+      name: t("dashboard.expense"),
       value: transactions
-        .filter((t) => t.type === "expense")
-        .reduce((sum, t) => sum + t.amount, 0),
+        .filter((transaction) => transaction.type === "expense")
+        .reduce((sum, transaction) => sum + transaction.amount, 0),
     },
   ];
 
   return (
     <div className="rounded-[30px] border border-zinc-200 bg-white p-5 sm:p-6">
       <h3 className="mb-4 text-lg font-medium text-zinc-800 sm:text-xl">
-        Budget Overview
+        {t("dashboard.budgetOverview")}
       </h3>
 
       <div className="h-[250px] min-w-0 w-full sm:h-[300px]">
@@ -30,7 +34,7 @@ export const BudgetChart = ({ transactions = [] }) => {
             <Pie
               data={data}
               dataKey="value"
-              innerRadius={60} 
+              innerRadius={60}
               outerRadius={100}
               paddingAngle={3}
             >
@@ -40,13 +44,14 @@ export const BudgetChart = ({ transactions = [] }) => {
             </Pie>
 
             <Tooltip
-              formatter={(value) => `₱${value.toLocaleString()}`}
+              formatter={(value) =>
+                formatCurrency(Number(value), currency, languageRegion)
+              }
             />
           </PieChart>
         </ResponsiveContainer>
       </div>
 
-      {/* Legend */}
       <div className="mt-4 flex justify-center gap-6 text-sm">
         {data.map((item, index) => (
           <div key={item.name} className="flex items-center gap-2">
