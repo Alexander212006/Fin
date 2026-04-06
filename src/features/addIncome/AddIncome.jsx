@@ -10,44 +10,6 @@ export const AddIncome = ({ toast, setTransactions }) => {
     toast,
     setTransactions,
   });
-  const fields = incomeFieldConfig.map((field) => ({
-    ...field,
-    props: {
-      ...field.props,
-      label:
-        field.name === "title"
-          ? t("forms.fields.incomeTitle", field.props.label)
-          : field.name === "amount"
-            ? t("forms.fields.amount", field.props.label)
-            : field.name === "source"
-              ? t("forms.fields.source", field.props.label)
-              : field.name === "date"
-                ? t("forms.fields.dateReceived", field.props.label)
-                : field.name === "account"
-                  ? t("forms.fields.account", field.props.label)
-                  : field.props.label,
-      placeholder:
-        field.name === "title"
-          ? t("forms.placeholders.enterIncomeTitle", field.props.placeholder)
-          : field.name === "amount"
-            ? t("forms.placeholders.zeroAmount", field.props.placeholder)
-            : field.name === "date"
-              ? t("forms.placeholders.selectDate", field.props.placeholder)
-              : field.props.placeholder,
-      options:
-        field.name === "source"
-          ? field.props.options.map((option) => ({
-              ...option,
-              label: t(`options.incomeSources.${option.value}`, option.label),
-            }))
-          : field.name === "account"
-            ? field.props.options.map((option) => ({
-                ...option,
-                label: t(`options.accounts.${option.value}`, option.label),
-              }))
-            : field.props.options,
-    },
-  }));
 
   return (
     <section>
@@ -87,7 +49,7 @@ export const AddIncome = ({ toast, setTransactions }) => {
           </div>
 
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-            {fields.map(
+            {incomeFieldConfig.map(
               ({ name, component: Component, props, colSpan }) => (
                 <div key={name} className={colSpan}>
                   <Component

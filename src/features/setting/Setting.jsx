@@ -112,7 +112,7 @@ export const Setting = ({ currency, setCurrency, languageRegion, setLanguageRegi
                 >
                   {CURRENCIES.map(({ code, name }) => (
                     <option key={code} value={code}>
-                      {t(`options.currencies.${code}`, name)} ({code})
+                      {name} ({code})
                     </option>
                   ))}
                 </select>
@@ -134,7 +134,7 @@ export const Setting = ({ currency, setCurrency, languageRegion, setLanguageRegi
                 >
                   {LANGUAGE_REGIONS.map(({ value, label }) => (
                     <option key={value} value={value}>
-                      {t(`options.languageRegions.${value}`, label)}
+                      {label}
                     </option>
                   ))}
                 </select>

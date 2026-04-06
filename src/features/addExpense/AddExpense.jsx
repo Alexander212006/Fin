@@ -10,48 +10,6 @@ export const AddExpense = ({ setTransactions, toast }) => {
     toast,
     setTransactions,
   });
-  const fields = expenseFieldConfig.map((field) => ({
-    ...field,
-    props: {
-      ...field.props,
-      label:
-        field.name === "title"
-          ? t("forms.fields.expenseTitle", field.props.label)
-          : field.name === "amount"
-            ? t("forms.fields.amount", field.props.label)
-            : field.name === "category"
-              ? t("forms.fields.category", field.props.label)
-              : field.name === "date"
-                ? t("forms.fields.dateSpent", field.props.label)
-                : field.name === "account"
-                  ? t("forms.fields.account", field.props.label)
-                  : field.name === "merchant"
-                    ? t("forms.fields.merchantOptional", field.props.label)
-                    : field.props.label,
-      placeholder:
-        field.name === "title"
-          ? t("forms.placeholders.enterExpenseTitle", field.props.placeholder)
-          : field.name === "amount"
-            ? t("forms.placeholders.zeroAmount", field.props.placeholder)
-            : field.name === "date"
-              ? t("forms.placeholders.selectDate", field.props.placeholder)
-              : field.name === "merchant"
-                ? t("forms.placeholders.enterMerchantName", field.props.placeholder)
-                : field.props.placeholder,
-      options:
-        field.name === "category"
-          ? field.props.options.map((option) => ({
-              ...option,
-              label: t(`options.expenseCategories.${option.value}`, option.label),
-            }))
-          : field.name === "account"
-            ? field.props.options.map((option) => ({
-                ...option,
-                label: t(`options.accounts.${option.value}`, option.label),
-              }))
-            : field.props.options,
-    },
-  }));
 
   return (
     <section>
@@ -91,7 +49,7 @@ export const AddExpense = ({ setTransactions, toast }) => {
           </div>
 
           <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
-            {fields.map(
+            {expenseFieldConfig.map(
               ({ name, component: Component, props, colSpan }) => (
                 <div key={name} className={colSpan}>
                   <Component
