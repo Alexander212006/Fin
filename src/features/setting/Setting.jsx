@@ -20,6 +20,10 @@ import { Toggle } from "./components/Toggle";
 import { setInitialUserProfile } from "./utils/setInitialUserProfile";
 import { CURRENCIES, LANGUAGE_REGIONS } from "../../constants/currencies";
 import { useI18n } from "../../i18n";
+import {
+  enableNotifications,
+  getStoredFcmToken,
+} from "../notification/firebaseConfig";
 
 const user = {
   userId: crypto.randomUUID(),
@@ -32,7 +36,11 @@ const user = {
 
 export const Setting = ({ currency, setCurrency, languageRegion, setLanguageRegion}) => {
   const { t } = useI18n();
-  const [notifications, setNotifications] = useState(true);
+  const [notifications, setNotifications] = useState(
+    () => Notification.permission === "granted" || Boolean(getStoredFcmToken()),
+  );
+  const [notificationStatus, setNotificationStatus] = useState("");
+  const [fcmToken, setFcmToken] = useState(() => getStoredFcmToken() ?? "");
   const [darkMode, setDarkMode] = useState(false);
   const [budgetAlerts, setBudgetAlerts] = useState(true);
   const [currentUser, setCurrentUser] = useState(() =>
@@ -61,6 +69,31 @@ export const Setting = ({ currency, setCurrency, languageRegion, setLanguageRegi
   const hadleLanguageRegionChange = (event) => {
     setLanguageRegion(event.target.value);
   };
+
+  const handleNotificationToggle = async () => {
+    if (notifications) {
+      setNotifications(false);
+      setNotificationStatus(
+        "Notifications disabled in app. Browser permission and saved token remain available for testing.",
+      );
+      return;
+    }
+
+    try {
+      const token = await enableNotifications();
+      setNotifications(true);
+      setFcmToken(token);
+      setNotificationStatus(
+        "Push notifications are enabled. Copy the token below and use Firebase Console -> Messaging -> Send test message.",
+      );
+      console.log("FCM registration token:", token);
+    } catch (error) {
+      setNotifications(false);
+      setNotificationStatus(error.message);
+      console.error("Unable to enable notifications:", error);
+    }
+  };
+
   return (
     <section>
       <div className="mb-6">
@@ -154,10 +187,23 @@ export const Setting = ({ currency, setCurrency, languageRegion, setLanguageRegi
               action={
                 <Toggle
                   enabled={notifications}
-                  onToggle={() => setNotifications((value) => !value)}
+                  onToggle={handleNotificationToggle}
                 />
               }
             />
+            {notificationStatus ? (
+              <div className="rounded-2xl bg-[#f7f7f7] p-4 text-sm text-zinc-600">
+                {notificationStatus}
+              </div>
+            ) : null}
+            {fcmToken ? (
+              <div className="rounded-2xl bg-[#f7f7f7] p-4 text-sm text-zinc-600">
+                <div className="font-medium text-zinc-800">FCM token</div>
+                <div className="mt-2 break-all font-mono text-xs text-zinc-500">
+                  {fcmToken}
+                </div>
+              </div>
+            ) : null}
             <SettingRow
               icon={ShieldCheck}
               title={t("settings.sections.notifications.budgetAlerts")}
