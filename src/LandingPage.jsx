@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import { Header } from "./form/Header";
 import { Sidebar } from "./form/Sidebar";
@@ -9,6 +9,11 @@ import { History } from "./features/transactionHistory/History";
 import { Setting } from "./features/setting/Setting";
 import toast, { Toaster } from "react-hot-toast";
 import { I18nProvider } from "./i18n";
+import {
+  loadBudgetAlertSettings,
+  saveBudgetAlertSettings,
+} from "./features/notification/budgetAlerts";
+import { useBudgetAlerts } from "./features/notification/useBudgetAlerts";
 
 
 const initialTransactions = {
@@ -27,6 +32,20 @@ export const LandingPage = () => {
   const [transactions, setTransactions] = useState([initialTransactions]);
   const [currency, setCurrency] = useState("PHP");
   const [languageRegion, setLanguageRegion] = useState("en-PH");
+  const [budgetAlertSettings, setBudgetAlertSettings] = useState(() =>
+    loadBudgetAlertSettings(),
+  );
+
+  useEffect(() => {
+    saveBudgetAlertSettings(budgetAlertSettings);
+  }, [budgetAlertSettings]);
+
+  useBudgetAlerts({
+    transactions,
+    budgetAlertSettings,
+    currency,
+    languageRegion,
+  });
 
   return (
     <I18nProvider languageRegion={languageRegion}>
@@ -115,7 +134,15 @@ export const LandingPage = () => {
                 <Route
                   path="/Setting"
                   element={
-                    <Setting currency={currency} setCurrency={setCurrency} languageRegion={languageRegion} setLanguageRegion={setLanguageRegion} />
+                    <Setting
+                      currency={currency}
+                      setCurrency={setCurrency}
+                      languageRegion={languageRegion}
+                      setLanguageRegion={setLanguageRegion}
+                      budgetAlertSettings={budgetAlertSettings}
+                      setBudgetAlertSettings={setBudgetAlertSettings}
+                      transactions={transactions}
+                    />
                   }
                 />
               </Routes>

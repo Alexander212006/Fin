@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import {
   Bell,
   ChevronRight,
   Globe,
-  Languages,
   Lock,
   Moon,
   Palette,
@@ -20,10 +19,12 @@ import { Toggle } from "./components/Toggle";
 import { setInitialUserProfile } from "./utils/setInitialUserProfile";
 import { CURRENCIES, LANGUAGE_REGIONS } from "../../constants/currencies";
 import { useI18n } from "../../i18n";
+import { formatCurrency } from "../../utils/currency";
 import {
   enableNotifications,
   getStoredFcmToken,
 } from "../notification/firebaseConfig";
+import { getCurrentMonthExpense } from "../notification/budgetAlerts";
 
 const user = {
   userId: crypto.randomUUID(),
@@ -32,27 +33,40 @@ const user = {
   email: "alex@gmail.com",
 };
 
-
-
-export const Setting = ({ currency, setCurrency, languageRegion, setLanguageRegion}) => {
+export const Setting = ({
+  currency,
+  setCurrency,
+  languageRegion,
+  setLanguageRegion,
+  budgetAlertSettings,
+  setBudgetAlertSettings,
+  transactions,
+}) => {
   const { t } = useI18n();
   const [notifications, setNotifications] = useState(
-    () => Notification.permission === "granted" || Boolean(getStoredFcmToken()),
+    () =>
+      (typeof Notification !== "undefined" &&
+        Notification.permission === "granted") ||
+      Boolean(getStoredFcmToken()),
   );
   const [notificationStatus, setNotificationStatus] = useState("");
-  const [fcmToken, setFcmToken] = useState(() => getStoredFcmToken() ?? "");
   const [darkMode, setDarkMode] = useState(false);
-  const [budgetAlerts, setBudgetAlerts] = useState(true);
   const [currentUser, setCurrentUser] = useState(() =>
     setInitialUserProfile(user),
   );
   const [isEditingProfile, setIsEditingProfile] = useState(false);
 
-
   const selectedCurrency =
     CURRENCIES.find(({ code }) => code === currency) ?? CURRENCIES[0];
-    
-  const selectedLanguageRegion = LANGUAGE_REGIONS.find(({value}) => value === languageRegion) ?? LANGUAGE_REGIONS[0];
+  const selectedLanguageRegion =
+    LANGUAGE_REGIONS.find(({ value }) => value === languageRegion) ??
+    LANGUAGE_REGIONS[0];
+  const monthlyExpense = useMemo(
+    () => getCurrentMonthExpense(transactions),
+    [transactions],
+  );
+  const monthlyLimitValue = Number(budgetAlertSettings?.monthlyLimit) || 0;
+  const budgetUsageText = `${formatCurrency(monthlyExpense, currency, languageRegion)} / ${formatCurrency(monthlyLimitValue, currency, languageRegion)}`;
 
   const handleSaveEdit = (updatedProfile) => {
     setCurrentUser((previousUser) => ({
@@ -66,8 +80,37 @@ export const Setting = ({ currency, setCurrency, languageRegion, setLanguageRegi
     setCurrency(event.target.value);
   };
 
-  const hadleLanguageRegionChange = (event) => {
+  const handleLanguageRegionChange = (event) => {
     setLanguageRegion(event.target.value);
+  };
+
+  const handleBudgetAlertToggle = () => {
+    setBudgetAlertSettings((previous) => ({
+      ...previous,
+      enabled: !previous.enabled,
+    }));
+  };
+
+  const handleBudgetLimitChange = (event) => {
+    const rawValue = event.target.value.trim();
+
+    if (rawValue === "") {
+      setBudgetAlertSettings((previous) => ({
+        ...previous,
+        monthlyLimit: 0,
+      }));
+      return;
+    }
+
+    const parsedValue = Number(rawValue);
+    if (!Number.isFinite(parsedValue) || parsedValue < 0) {
+      return;
+    }
+
+    setBudgetAlertSettings((previous) => ({
+      ...previous,
+      monthlyLimit: parsedValue,
+    }));
   };
 
   const handleNotificationToggle = async () => {
@@ -82,7 +125,6 @@ export const Setting = ({ currency, setCurrency, languageRegion, setLanguageRegi
     try {
       const token = await enableNotifications();
       setNotifications(true);
-      setFcmToken(token);
       setNotificationStatus(
         "Push notifications are enabled. Copy the token below and use Firebase Console -> Messaging -> Send test message.",
       );
@@ -122,7 +164,7 @@ export const Setting = ({ currency, setCurrency, languageRegion, setLanguageRegi
             <SettingRow
               icon={User}
               title={t("settings.sections.profile.profileInformation")}
-              description={`${currentUser.firstName} ${currentUser.lastName} • ${currentUser.email}`}
+              description={`${currentUser.firstName} ${currentUser.lastName} - ${currentUser.email}`}
               action={
                 <button
                   className="rounded-2xl border border-zinc-200 bg-[#fafafa] px-4 py-2 text-sm font-medium text-zinc-700"
@@ -161,7 +203,7 @@ export const Setting = ({ currency, setCurrency, languageRegion, setLanguageRegi
               action={
                 <select
                   value={languageRegion}
-                  onChange={hadleLanguageRegionChange}
+                  onChange={handleLanguageRegionChange}
                   onClick={(event) => event.stopPropagation()}
                   className="rounded-2xl border border-zinc-200 bg-[#fafafa] px-3 py-2 text-sm font-medium text-zinc-700 outline-none transition focus:border-zinc-400"
                 >
@@ -183,7 +225,9 @@ export const Setting = ({ currency, setCurrency, languageRegion, setLanguageRegi
             <SettingRow
               icon={Bell}
               title={t("settings.sections.notifications.pushNotifications")}
-              description={t("settings.sections.notifications.pushNotificationsDescription")}
+              description={t(
+                "settings.sections.notifications.pushNotificationsDescription",
+              )}
               action={
                 <Toggle
                   enabled={notifications}
@@ -191,28 +235,61 @@ export const Setting = ({ currency, setCurrency, languageRegion, setLanguageRegi
                 />
               }
             />
-            {notificationStatus ? (
+
+            {notificationStatus && (
               <div className="rounded-2xl bg-[#f7f7f7] p-4 text-sm text-zinc-600">
                 {notificationStatus}
               </div>
-            ) : null}
-            {fcmToken ? (
-              <div className="rounded-2xl bg-[#f7f7f7] p-4 text-sm text-zinc-600">
-                <div className="font-medium text-zinc-800">FCM token</div>
-                <div className="mt-2 break-all font-mono text-xs text-zinc-500">
-                  {fcmToken}
-                </div>
-              </div>
-            ) : null}
+            )}
+
             <SettingRow
               icon={ShieldCheck}
               title={t("settings.sections.notifications.budgetAlerts")}
-              description={t("settings.sections.notifications.budgetAlertsDescription")}
+              description={t(
+                "settings.sections.notifications.budgetAlertsDescription",
+              )}
               action={
                 <Toggle
-                  enabled={budgetAlerts}
-                  onToggle={() => setBudgetAlerts((value) => !value)}
+                  enabled={Boolean(budgetAlertSettings?.enabled)}
+                  onToggle={handleBudgetAlertToggle}
                 />
+              }
+            />
+            <SettingRow
+              icon={Wallet}
+              title={t(
+                "settings.sections.notifications.monthlyBudgetLimit",
+                "Monthly budget limit",
+              )}
+              description={t(
+                "settings.sections.notifications.monthlyBudgetLimitDescription",
+                "Alerts trigger at 80% and 100% of this limit.",
+              )}
+              action={
+                <input
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  value={budgetAlertSettings?.monthlyLimit ?? 0}
+                  onChange={handleBudgetLimitChange}
+                  className="w-32 rounded-2xl border border-zinc-200 bg-[#fafafa] px-3 py-2 text-right text-sm font-medium text-zinc-700 outline-none transition focus:border-zinc-400"
+                />
+              }
+            />
+            <SettingRow
+              icon={Wallet}
+              title={t(
+                "settings.sections.notifications.thisMonthBudgetUsage",
+                "This month usage",
+              )}
+              description={t(
+                "settings.sections.notifications.thisMonthBudgetUsageDescription",
+                "Current expenses compared to your monthly limit.",
+              )}
+              action={
+                <span className="rounded-2xl bg-[#fafafa] px-3 py-2 text-sm font-medium text-zinc-700">
+                  {budgetUsageText}
+                </span>
               }
               noBorder
             />
@@ -236,7 +313,9 @@ export const Setting = ({ currency, setCurrency, languageRegion, setLanguageRegi
             <SettingRow
               icon={Palette}
               title={t("settings.sections.appearance.accentColor")}
-              description={t("settings.sections.appearance.accentColorDescription")}
+              description={t(
+                "settings.sections.appearance.accentColorDescription",
+              )}
               action={<ChevronRight className="h-5 w-5 text-zinc-400" />}
               noBorder
             />
@@ -249,7 +328,9 @@ export const Setting = ({ currency, setCurrency, languageRegion, setLanguageRegi
             <SettingRow
               icon={Lock}
               title={t("settings.sections.security.changePassword")}
-              description={t("settings.sections.security.changePasswordDescription")}
+              description={t(
+                "settings.sections.security.changePasswordDescription",
+              )}
               action={
                 <button className="rounded-2xl border border-zinc-200 bg-[#fafafa] px-4 py-2 text-sm font-medium text-zinc-700">
                   {t("settings.sections.security.update")}
@@ -279,7 +360,11 @@ export const Setting = ({ currency, setCurrency, languageRegion, setLanguageRegi
             <div className="space-y-3 text-sm sm:text-base">
               <div className="rounded-2xl bg-[#f7f7f7] p-4">
                 {t("settings.appPreferences.notifications")}:{" "}
-                <span className="font-medium text-zinc-800">{t("settings.appPreferences.enabled")}</span>
+                <span className="font-medium text-zinc-800">
+                  {notifications
+                    ? t("settings.appPreferences.enabled")
+                    : t("settings.appPreferences.disabled", "Disabled")}
+                </span>
               </div>
               <div className="rounded-2xl bg-[#f7f7f7] p-4">
                 {t("settings.appPreferences.defaultCurrency")}:{" "}
@@ -288,18 +373,32 @@ export const Setting = ({ currency, setCurrency, languageRegion, setLanguageRegi
                 </span>
               </div>
               <div className="rounded-2xl bg-[#f7f7f7] p-4">
+                {t("settings.sections.notifications.budgetAlerts")}:{" "}
+                <span className="font-medium text-zinc-800">
+                  {budgetAlertSettings?.enabled
+                    ? t("settings.appPreferences.enabled")
+                    : t("settings.appPreferences.disabled", "Disabled")}
+                </span>
+              </div>
+              <div className="rounded-2xl bg-[#f7f7f7] p-4">
                 {t("settings.appPreferences.loginSecurity")}:{" "}
-                <span className="font-medium text-zinc-800">{t("settings.appPreferences.biometric")}</span>
+                <span className="font-medium text-zinc-800">
+                  {t("settings.appPreferences.biometric")}
+                </span>
               </div>
               <div className="rounded-2xl bg-[#f7f7f7] p-4">
                 {t("settings.appPreferences.themeMode")}:{" "}
-                <span className="font-medium text-zinc-800">{t("settings.appPreferences.light")}</span>
+                <span className="font-medium text-zinc-800">
+                  {t("settings.appPreferences.light")}
+                </span>
               </div>
             </div>
           </div>
 
           <div className="rounded-[30px] border border-zinc-200 bg-white p-6 sm:p-7">
-            <h3 className="text-2xl font-medium text-zinc-800">{t("settings.dangerZone.title")}</h3>
+            <h3 className="text-2xl font-medium text-zinc-800">
+              {t("settings.dangerZone.title")}
+            </h3>
             <p className="mt-2 text-sm text-zinc-500">
               {t("settings.dangerZone.subtitle")}
             </p>
