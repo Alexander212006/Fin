@@ -17,10 +17,10 @@ export const History = ({ transactions }) => {
   return (
     <section>
       <div className="mb-6">
-        <h2 className="text-3xl font-semibold tracking-tight text-zinc-800 sm:text-[42px]">
+        <h2 className="text-3xl font-semibold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-[42px]">
           History
         </h2>
-        <p className="mt-2 text-sm text-zinc-500 sm:text-base">
+        <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400 sm:text-base">
           Review all your recorded transactions in one place.
         </p>
       </div>

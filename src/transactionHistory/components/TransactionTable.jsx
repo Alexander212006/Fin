@@ -8,24 +8,24 @@ import { getTransactionAccount } from "../utils/buildTransactions";
 
 export const TransactionTable = ({ transactions }) => {
   return (
-    <div className="rounded-[28px] border border-zinc-200 bg-white p-4 sm:p-6">
+    <div className="rounded-[28px] border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-4 sm:p-6">
       <div className="mb-5 flex items-center justify-between gap-3">
         <div>
-          <h3 className="text-2xl font-medium text-zinc-800">
+          <h3 className="text-2xl font-medium text-zinc-800 dark:text-zinc-100">
             Recent transactions
           </h3>
-          <p className="mt-1 text-sm text-zinc-500">
+          <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
             Showing {transactions.length} transaction
             {transactions.length === 1 ? "" : "s"} this month
           </p>
         </div>
-        <button className="rounded-2xl border border-zinc-200 bg-[#fafafa] px-4 py-2 text-sm font-medium text-zinc-700">
+        <button className="rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-[#fafafa] dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-200">
           Export
         </button>
       </div>
 
       {transactions.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-zinc-200 bg-[#fafafa] px-4 py-10 text-center text-sm text-zinc-500">
+        <div className="rounded-2xl border border-dashed border-zinc-200 dark:border-zinc-700 bg-[#fafafa] dark:bg-zinc-800 px-4 py-10 text-center text-sm text-zinc-500 dark:text-zinc-400">
           No transactions recorded for this month yet.
         </div>
       ) : null}
@@ -40,11 +40,11 @@ export const TransactionTable = ({ transactions }) => {
           return (
             <article
               key={item.id}
-              className="rounded-2xl border border-zinc-200 bg-[#fafafa] p-4"
+              className="rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-[#fafafa] dark:bg-zinc-800 p-4"
             >
               <div className="flex items-start justify-between gap-3">
                 <div>
-                  <p className="font-medium text-zinc-800">{item.title}</p>
+                  <p className="font-medium text-zinc-800 dark:text-zinc-100">{item.title}</p>
                   <p
                     className={`mt-2 text-sm font-semibold ${
                       isIncome ? "text-emerald-600" : "text-rose-500"
@@ -53,7 +53,7 @@ export const TransactionTable = ({ transactions }) => {
                     {isIncome ? "+" : "-"}
                     {formatCurrency(item.amount)}
                   </p>
-                  <p className="mt-1 text-sm text-zinc-500">
+                  <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
                     {item.category || "N/A"}
                   </p>
                 </div>
@@ -74,17 +74,17 @@ export const TransactionTable = ({ transactions }) => {
               </div>
 
               <div className="mt-4 grid grid-cols-2 gap-3 text-sm">
-                <div className="rounded-xl bg-white px-3 py-2">
-                  <p className="text-xs uppercase tracking-wide text-zinc-400">
+                <div className="rounded-xl bg-white dark:bg-zinc-900 px-3 py-2">
+                  <p className="text-xs uppercase tracking-wide text-zinc-400 dark:text-zinc-500">
                     Account
                   </p>
-                  <p className="mt-1 text-zinc-700">{accountLabel}</p>
+                  <p className="mt-1 text-zinc-700 dark:text-zinc-200">{accountLabel}</p>
                 </div>
-                <div className="rounded-xl bg-white px-3 py-2">
-                  <p className="text-xs uppercase tracking-wide text-zinc-400">
+                <div className="rounded-xl bg-white dark:bg-zinc-900 px-3 py-2">
+                  <p className="text-xs uppercase tracking-wide text-zinc-400 dark:text-zinc-500">
                     Date
                   </p>
-                  <p className="mt-1 text-zinc-700">{formatDate(item.date)}</p>
+                  <p className="mt-1 text-zinc-700 dark:text-zinc-200">{formatDate(item.date)}</p>
                 </div>
               </div>
             </article>
@@ -92,10 +92,10 @@ export const TransactionTable = ({ transactions }) => {
         })}
       </div>
 
-      <div className="hidden overflow-x-auto rounded-2xl border border-zinc-200 lg:block">
+      <div className="hidden overflow-x-auto rounded-2xl border border-zinc-200 dark:border-zinc-700 lg:block">
         <table className="w-full border-collapse">
-          <thead className="bg-[#fafafa] text-left">
-            <tr className="text-sm text-zinc-500">
+          <thead className="bg-[#fafafa] dark:bg-zinc-800 text-left">
+            <tr className="text-sm text-zinc-500 dark:text-zinc-400">
               {TRANSACTION_TABLE_HEADERS.map((header) => (
                 <th className="px-5 py-4 font-medium" key={header}>
                   {header}

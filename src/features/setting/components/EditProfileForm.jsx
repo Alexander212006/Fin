@@ -43,13 +43,13 @@ export const EditProfileForm = ({ currentUser, onSave, onCancel }) => {
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/35 px-4 py-6">
-      <div className="w-full max-w-2xl rounded-[32px] border border-zinc-200 bg-white p-6 shadow-xl sm:p-8">
+      <div className="w-full max-w-2xl rounded-[32px] border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-6 shadow-xl sm:p-8">
         <div className="mb-6 flex items-start justify-between gap-4">
           <div>
-            <h3 className="text-2xl font-semibold text-zinc-800 sm:text-3xl">
+            <h3 className="text-2xl font-semibold text-zinc-800 dark:text-zinc-100 sm:text-3xl">
               {t("settings.editProfile.title")}
             </h3>
-            <p className="mt-2 text-sm text-zinc-500 sm:text-base">
+            <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400 sm:text-base">
               {t("settings.editProfile.subtitle")}
             </p>
           </div>
@@ -57,7 +57,7 @@ export const EditProfileForm = ({ currentUser, onSave, onCancel }) => {
           <button
             type="button"
             onClick={onCancel}
-            className="rounded-2xl border border-zinc-200 bg-white p-3 text-zinc-500 transition hover:bg-zinc-50 hover:text-zinc-700"
+            className="rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-3 text-zinc-500 dark:text-zinc-400 transition hover:bg-zinc-50 dark:hover:bg-zinc-700 hover:text-zinc-700"
             aria-label={t("settings.editProfile.close")}
           >
             <X className="h-5 w-5" />
@@ -76,7 +76,7 @@ export const EditProfileForm = ({ currentUser, onSave, onCancel }) => {
             <button
               type="button"
               onClick={onCancel}
-              className="rounded-2xl border border-zinc-200 bg-white px-5 py-3 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50 sm:text-base"
+              className="rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-5 py-3 text-sm font-medium text-zinc-700 dark:text-zinc-200 transition hover:bg-zinc-50 dark:hover:bg-zinc-700 sm:text-base"
             >
               {t("settings.editProfile.cancel")}
             </button>

@@ -23,8 +23,8 @@ export const BudgetChart = ({ transactions = [], currency, languageRegion }) => 
   ];
 
   return (
-    <div className="rounded-[30px] border border-zinc-200 bg-white p-5 sm:p-6">
-      <h3 className="mb-4 text-lg font-medium text-zinc-800 sm:text-xl">
+    <div className="rounded-[30px] border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-5 sm:p-6">
+      <h3 className="mb-4 text-lg font-medium text-zinc-800 dark:text-zinc-100 sm:text-xl">
         {t("dashboard.budgetOverview")}
       </h3>
 
@@ -59,7 +59,7 @@ export const BudgetChart = ({ transactions = [], currency, languageRegion }) => 
               className="h-3 w-3 rounded-full"
               style={{ backgroundColor: COLORS[index] }}
             />
-            <span className="text-zinc-600">{item.name}</span>
+            <span className="text-zinc-600 dark:text-zinc-300">{item.name}</span>
           </div>
         ))}
       </div>

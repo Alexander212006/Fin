@@ -95,10 +95,10 @@ export const TransactionHistory = ({
   const displayedTransactions = transactions.toReversed();
 
   return (
-    <div className="rounded-[30px] border border-zinc-200 bg-white p-5 sm:p-6">
+    <div className="rounded-[30px] border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-5 sm:p-6">
       <div className="mb-6 flex items-center justify-between gap-4">
         <div>
-          <h3 className="text-2xl font-medium text-zinc-800">
+          <h3 className="text-2xl font-medium text-zinc-800 dark:text-zinc-100">
             {t("dashboard.transactionHistory")}
           </h3>
         </div>
@@ -107,10 +107,10 @@ export const TransactionHistory = ({
         </button>
       </div>
 
-      <p className="mb-6 text-lg text-zinc-600">{t("dashboard.today")}</p>
+      <p className="mb-6 text-lg text-zinc-600 dark:text-zinc-300">{t("dashboard.today")}</p>
 
       <div className="relative space-y-6">
-        <div className="absolute bottom-3 left-1.5 top-3 w-px bg-zinc-300" />
+        <div className="absolute bottom-3 left-1.5 top-3 w-px bg-zinc-300 dark:bg-zinc-600" />
 
         {editingTransaction && (
           <EditTransactionForm
@@ -121,7 +121,7 @@ export const TransactionHistory = ({
         )}
 
         {transactions.length === 0 ? (
-          <p className="text-center text-zinc-500">{t("dashboard.noTransactions")}</p>
+          <p className="text-center text-zinc-500 dark:text-zinc-400">{t("dashboard.noTransactions")}</p>
         ) : (
           displayedTransactions.map((transaction) => (
             <TransactionHistoryItem

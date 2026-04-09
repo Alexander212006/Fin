@@ -15,6 +15,24 @@ import {
 } from "./features/notification/budgetAlerts";
 import { useBudgetAlerts } from "./features/notification/useBudgetAlerts";
 
+const THEME_STORAGE_KEY = "themeMode";
+
+const getInitialDarkMode = () => {
+  if (typeof window === "undefined") {
+    return false;
+  }
+
+  const storedTheme = window.localStorage.getItem(THEME_STORAGE_KEY);
+  if (storedTheme === "dark") {
+    return true;
+  }
+
+  if (storedTheme === "light") {
+    return false;
+  }
+
+  return window.matchMedia?.("(prefers-color-scheme: dark)").matches ?? false;
+};
 
 const initialTransactions = {
   id: crypto.randomUUID(),
@@ -32,6 +50,7 @@ export const LandingPage = () => {
   const [transactions, setTransactions] = useState([initialTransactions]);
   const [currency, setCurrency] = useState("PHP");
   const [languageRegion, setLanguageRegion] = useState("en-PH");
+  const [darkMode, setDarkMode] = useState(() => getInitialDarkMode());
   const [budgetAlertSettings, setBudgetAlertSettings] = useState(() =>
     loadBudgetAlertSettings(),
   );
@@ -39,6 +58,16 @@ export const LandingPage = () => {
   useEffect(() => {
     saveBudgetAlertSettings(budgetAlertSettings);
   }, [budgetAlertSettings]);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", darkMode);
+    document.documentElement.style.colorScheme = darkMode ? "dark" : "light";
+
+    const value = darkMode ? "dark" : "light";
+    if(localStorage.getItem(THEME_STORAGE_KEY) !== value) {
+      window.localStorage.setItem(THEME_STORAGE_KEY, value);
+    }
+  }, [darkMode]);
 
   useBudgetAlerts({
     transactions,
@@ -49,7 +78,7 @@ export const LandingPage = () => {
 
   return (
     <I18nProvider languageRegion={languageRegion}>
-      <div className="min-h-screen bg-[#efefef] text-zinc-900">
+      <div className="min-h-screen bg-[#efefef] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100">
       <Toaster position="top-right" reverseOrder={false} />
       {/* Desktop sidebar */}
       <div className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-40 lg:block lg:w-[270px]">
@@ -135,6 +164,8 @@ export const LandingPage = () => {
                   path="/Setting"
                   element={
                     <Setting
+                      darkMode={darkMode}
+                      setDarkMode={setDarkMode}
                       currency={currency}
                       setCurrency={setCurrency}
                       languageRegion={languageRegion}

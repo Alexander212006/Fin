@@ -15,10 +15,10 @@ export const AddIncome = ({ toast, setTransactions }) => {
     <section>
       <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="text-3xl font-semibold tracking-tight text-zinc-800 sm:text-[42px]">
+          <h2 className="text-3xl font-semibold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-[42px]">
             {t("addIncome.title")}
           </h2>
-          <p className="mt-2 text-sm text-zinc-500 sm:text-base">
+          <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400 sm:text-base">
             {t("addIncome.subtitle")}
           </p>
         </div>
@@ -31,7 +31,7 @@ export const AddIncome = ({ toast, setTransactions }) => {
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
         <form
-          className="rounded-[30px] border border-zinc-200 bg-white p-5 sm:p-7"
+          className="rounded-[30px] border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-5 sm:p-7"
           onSubmit={(e) => handleSubmit(e)}
         >
           <div className="mb-8 flex items-start gap-4">
@@ -39,10 +39,10 @@ export const AddIncome = ({ toast, setTransactions }) => {
               <BadgeDollarSign className="h-6 w-6" />
             </div>
             <div>
-              <h3 className="text-2xl font-medium text-zinc-800">
+              <h3 className="text-2xl font-medium text-zinc-800 dark:text-zinc-100">
                 {t("addIncome.detailsTitle")}
               </h3>
-              <p className="text-sm text-zinc-500">
+              <p className="text-sm text-zinc-500 dark:text-zinc-400">
                 {t("addIncome.detailsSubtitle")}
               </p>
             </div>
@@ -63,33 +63,33 @@ export const AddIncome = ({ toast, setTransactions }) => {
 
             <div className="sm:col-span-2">
               <label className="block">
-                <span className="mb-3 block text-sm font-medium text-zinc-700 sm:text-base">
+                <span className="mb-3 block text-sm font-medium text-zinc-700 dark:text-zinc-200 sm:text-base">
                   {t("addIncome.notes")}
                 </span>
-                <div className="rounded-2xl border border-zinc-200 bg-[#fafafa] px-4 py-3 transition focus-within:border-zinc-300 focus-within:bg-white">
+                <div className="rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-[#fafafa] dark:bg-zinc-800 px-4 py-3 transition focus-within:border-zinc-300 dark:focus-within:border-zinc-500 focus-within:bg-white dark:focus-within:bg-zinc-700">
                   <textarea
                     rows={5}
                     value={form.notes}
                     onChange={(e) => updateField("notes", e.target.value)}
                     placeholder={t("addIncome.notesPlaceholder")}
-                    className="w-full resize-none bg-transparent text-sm text-zinc-800 outline-none placeholder:text-zinc-400 sm:text-base"
+                    className="w-full resize-none bg-transparent text-sm text-zinc-800 dark:text-zinc-100 outline-none placeholder:text-zinc-400 dark:placeholder:text-zinc-500 sm:text-base"
                   />
                 </div>
               </label>
             </div>
           </div>
 
-          <div className="mt-8 rounded-3xl border border-dashed border-zinc-300 bg-[#fafafa] p-5">
+          <div className="mt-8 rounded-3xl border border-dashed border-zinc-300 dark:border-zinc-600 bg-[#fafafa] dark:bg-zinc-800 p-5">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-start gap-3">
-                <div className="rounded-2xl bg-white p-3 shadow-sm">
-                  <Image className="h-5 w-5 text-zinc-500" />
+                <div className="rounded-2xl bg-white dark:bg-zinc-900 p-3 shadow-sm">
+                  <Image className="h-5 w-5 text-zinc-500 dark:text-zinc-400" />
                 </div>
                 <div>
-                  <h4 className="font-medium text-zinc-800">
+                  <h4 className="font-medium text-zinc-800 dark:text-zinc-100">
                     {t("addIncome.attachTitle")}
                   </h4>
-                  <p className="mt-1 text-sm text-zinc-500">
+                  <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">
                     {t("addIncome.attachSubtitle")}
                   </p>
                 </div>
@@ -101,7 +101,7 @@ export const AddIncome = ({ toast, setTransactions }) => {
 
           <div className="mt-8 flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
             <button
-              className="rounded-2xl border border-zinc-200 bg-white px-5 py-3 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50 sm:text-base"
+              className="rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-5 py-3 text-sm font-medium text-zinc-700 dark:text-zinc-200 transition hover:bg-zinc-50 dark:hover:bg-zinc-700 sm:text-base"
               type="button"
             >
               {t("addIncome.saveDraft")}
@@ -116,16 +116,16 @@ export const AddIncome = ({ toast, setTransactions }) => {
         </form>
 
         <div className="space-y-6">
-          <div className="rounded-[30px] border border-zinc-200 bg-white p-6 sm:p-7">
-            <h3 className="text-2xl font-medium text-zinc-800">{t("addIncome.quickTips")}</h3>
-            <div className="mt-5 space-y-4 text-sm text-zinc-600 sm:text-base">
-              <div className="rounded-2xl bg-[#f7f7f7] p-4">
+          <div className="rounded-[30px] border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-6 sm:p-7">
+            <h3 className="text-2xl font-medium text-zinc-800 dark:text-zinc-100">{t("addIncome.quickTips")}</h3>
+            <div className="mt-5 space-y-4 text-sm text-zinc-600 dark:text-zinc-300 sm:text-base">
+              <div className="rounded-2xl bg-[#f7f7f7] dark:bg-zinc-800 p-4">
                 {t("addIncome.tips.clearTitles")}
               </div>
-              <div className="rounded-2xl bg-[#f7f7f7] p-4">
+              <div className="rounded-2xl bg-[#f7f7f7] dark:bg-zinc-800 p-4">
                 {t("addIncome.tips.addNotes")}
               </div>
-              <div className="rounded-2xl bg-[#f7f7f7] p-4">
+              <div className="rounded-2xl bg-[#f7f7f7] dark:bg-zinc-800 p-4">
                 {t("addIncome.tips.keepReceipts")}
               </div>
             </div>

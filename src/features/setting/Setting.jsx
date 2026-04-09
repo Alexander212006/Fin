@@ -34,6 +34,8 @@ const user = {
 };
 
 export const Setting = ({
+  darkMode,
+  setDarkMode,
   currency,
   setCurrency,
   languageRegion,
@@ -50,7 +52,6 @@ export const Setting = ({
       Boolean(getStoredFcmToken()),
   );
   const [notificationStatus, setNotificationStatus] = useState("");
-  const [darkMode, setDarkMode] = useState(false);
   const [currentUser, setCurrentUser] = useState(() =>
     setInitialUserProfile(user),
   );
@@ -139,10 +140,10 @@ export const Setting = ({
   return (
     <section>
       <div className="mb-6">
-        <h2 className="text-3xl font-semibold tracking-tight text-zinc-800 sm:text-[42px]">
+        <h2 className="text-3xl font-semibold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-[42px]">
           {t("settings.title")}
         </h2>
-        <p className="mt-2 text-sm text-zinc-500 sm:text-base">
+        <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400 sm:text-base">
           {t("settings.subtitle")}
         </p>
       </div>
@@ -167,7 +168,7 @@ export const Setting = ({
               description={`${currentUser.firstName} ${currentUser.lastName} - ${currentUser.email}`}
               action={
                 <button
-                  className="rounded-2xl border border-zinc-200 bg-[#fafafa] px-4 py-2 text-sm font-medium text-zinc-700"
+                  className="rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-[#fafafa] dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-200"
                   onClick={() => setIsEditingProfile(true)}
                 >
                   {t("settings.sections.profile.edit")}
@@ -183,7 +184,7 @@ export const Setting = ({
                   value={currency}
                   onChange={handleCurrencyChange}
                   onClick={(event) => event.stopPropagation()}
-                  className="rounded-2xl border border-zinc-200 bg-[#fafafa] px-3 py-2 text-sm font-medium text-zinc-700 outline-none transition focus:border-zinc-400"
+                  className="rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-[#fafafa] dark:bg-zinc-800 px-3 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-200 outline-none transition focus:border-zinc-400 dark:focus:border-zinc-500"
                 >
                   {CURRENCIES.map(({ code, name }) => (
                     <option key={code} value={code}>
@@ -205,7 +206,7 @@ export const Setting = ({
                   value={languageRegion}
                   onChange={handleLanguageRegionChange}
                   onClick={(event) => event.stopPropagation()}
-                  className="rounded-2xl border border-zinc-200 bg-[#fafafa] px-3 py-2 text-sm font-medium text-zinc-700 outline-none transition focus:border-zinc-400"
+                  className="rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-[#fafafa] dark:bg-zinc-800 px-3 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-200 outline-none transition focus:border-zinc-400 dark:focus:border-zinc-500"
                 >
                   {LANGUAGE_REGIONS.map(({ value, label }) => (
                     <option key={value} value={value}>
@@ -237,7 +238,7 @@ export const Setting = ({
             />
 
             {notificationStatus && (
-              <div className="rounded-2xl bg-[#f7f7f7] p-4 text-sm text-zinc-600">
+              <div className="rounded-2xl bg-[#f7f7f7] dark:bg-zinc-800 p-4 text-sm text-zinc-600 dark:text-zinc-300">
                 {notificationStatus}
               </div>
             )}
@@ -272,7 +273,7 @@ export const Setting = ({
                   step="0.01"
                   value={budgetAlertSettings?.monthlyLimit ?? 0}
                   onChange={handleBudgetLimitChange}
-                  className="w-32 rounded-2xl border border-zinc-200 bg-[#fafafa] px-3 py-2 text-right text-sm font-medium text-zinc-700 outline-none transition focus:border-zinc-400"
+                  className="w-32 rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-[#fafafa] dark:bg-zinc-800 px-3 py-2 text-right text-sm font-medium text-zinc-700 dark:text-zinc-200 outline-none transition focus:border-zinc-400 dark:focus:border-zinc-500"
                 />
               }
             />
@@ -287,7 +288,7 @@ export const Setting = ({
                 "Current expenses compared to your monthly limit.",
               )}
               action={
-                <span className="rounded-2xl bg-[#fafafa] px-3 py-2 text-sm font-medium text-zinc-700">
+                <span className="rounded-2xl bg-[#fafafa] dark:bg-zinc-800 px-3 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-200">
                   {budgetUsageText}
                 </span>
               }
@@ -316,7 +317,7 @@ export const Setting = ({
               description={t(
                 "settings.sections.appearance.accentColorDescription",
               )}
-              action={<ChevronRight className="h-5 w-5 text-zinc-400" />}
+              action={<ChevronRight className="h-5 w-5 text-zinc-400 dark:text-zinc-500" />}
               noBorder
             />
           </SectionCard>
@@ -332,7 +333,7 @@ export const Setting = ({
                 "settings.sections.security.changePasswordDescription",
               )}
               action={
-                <button className="rounded-2xl border border-zinc-200 bg-[#fafafa] px-4 py-2 text-sm font-medium text-zinc-700">
+                <button className="rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-[#fafafa] dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-200">
                   {t("settings.sections.security.update")}
                 </button>
               }
@@ -342,68 +343,70 @@ export const Setting = ({
         </div>
 
         <div className="space-y-6">
-          <div className="rounded-[30px] border border-zinc-200 bg-white p-6 sm:p-7">
+          <div className="rounded-[30px] border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-6 sm:p-7">
             <div className="mb-5 flex items-start gap-4">
-              <div className="rounded-2xl bg-zinc-100 p-3 text-zinc-700">
+              <div className="rounded-2xl bg-zinc-100 dark:bg-zinc-700 p-3 text-zinc-700 dark:text-zinc-200">
                 <Settings className="h-6 w-6" />
               </div>
               <div>
-                <h3 className="text-2xl font-medium text-zinc-800">
+                <h3 className="text-2xl font-medium text-zinc-800 dark:text-zinc-100">
                   {t("settings.appPreferences.title")}
                 </h3>
-                <p className="text-sm text-zinc-500">
+                <p className="text-sm text-zinc-500 dark:text-zinc-400">
                   {t("settings.appPreferences.subtitle")}
                 </p>
               </div>
             </div>
 
             <div className="space-y-3 text-sm sm:text-base">
-              <div className="rounded-2xl bg-[#f7f7f7] p-4">
+              <div className="rounded-2xl bg-[#f7f7f7] dark:bg-zinc-800 p-4">
                 {t("settings.appPreferences.notifications")}:{" "}
-                <span className="font-medium text-zinc-800">
+                <span className="font-medium text-zinc-800 dark:text-zinc-100">
                   {notifications
                     ? t("settings.appPreferences.enabled")
                     : t("settings.appPreferences.disabled", "Disabled")}
                 </span>
               </div>
-              <div className="rounded-2xl bg-[#f7f7f7] p-4">
+              <div className="rounded-2xl bg-[#f7f7f7] dark:bg-zinc-800 p-4">
                 {t("settings.appPreferences.defaultCurrency")}:{" "}
-                <span className="font-medium text-zinc-800">
+                <span className="font-medium text-zinc-800 dark:text-zinc-100">
                   {selectedCurrency.code}
                 </span>
               </div>
-              <div className="rounded-2xl bg-[#f7f7f7] p-4">
+              <div className="rounded-2xl bg-[#f7f7f7] dark:bg-zinc-800 p-4">
                 {t("settings.sections.notifications.budgetAlerts")}:{" "}
-                <span className="font-medium text-zinc-800">
+                <span className="font-medium text-zinc-800 dark:text-zinc-100">
                   {budgetAlertSettings?.enabled
                     ? t("settings.appPreferences.enabled")
                     : t("settings.appPreferences.disabled", "Disabled")}
                 </span>
               </div>
-              <div className="rounded-2xl bg-[#f7f7f7] p-4">
+              <div className="rounded-2xl bg-[#f7f7f7] dark:bg-zinc-800 p-4">
                 {t("settings.appPreferences.loginSecurity")}:{" "}
-                <span className="font-medium text-zinc-800">
+                <span className="font-medium text-zinc-800 dark:text-zinc-100">
                   {t("settings.appPreferences.biometric")}
                 </span>
               </div>
-              <div className="rounded-2xl bg-[#f7f7f7] p-4">
+              <div className="rounded-2xl bg-[#f7f7f7] dark:bg-zinc-800 p-4">
                 {t("settings.appPreferences.themeMode")}:{" "}
-                <span className="font-medium text-zinc-800">
-                  {t("settings.appPreferences.light")}
+                <span className="font-medium text-zinc-800 dark:text-zinc-100">
+                  {darkMode
+                    ? t("settings.appPreferences.dark", "Dark")
+                    : t("settings.appPreferences.light")}
                 </span>
               </div>
             </div>
           </div>
 
-          <div className="rounded-[30px] border border-zinc-200 bg-white p-6 sm:p-7">
-            <h3 className="text-2xl font-medium text-zinc-800">
+          <div className="rounded-[30px] border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-6 sm:p-7">
+            <h3 className="text-2xl font-medium text-zinc-800 dark:text-zinc-100">
               {t("settings.dangerZone.title")}
             </h3>
-            <p className="mt-2 text-sm text-zinc-500">
+            <p className="mt-2 text-sm text-zinc-500 dark:text-zinc-400">
               {t("settings.dangerZone.subtitle")}
             </p>
             <div className="mt-5 space-y-3">
-              <button className="w-full rounded-2xl border border-zinc-200 bg-[#fafafa] px-4 py-3 text-left text-sm font-medium text-zinc-700 transition hover:bg-zinc-50">
+              <button className="w-full rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-[#fafafa] dark:bg-zinc-800 px-4 py-3 text-left text-sm font-medium text-zinc-700 dark:text-zinc-200 transition hover:bg-zinc-50 dark:hover:bg-zinc-700">
                 {t("settings.dangerZone.exportData")}
               </button>
               <button className="w-full rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-left text-sm font-medium text-rose-600 transition hover:bg-rose-100">

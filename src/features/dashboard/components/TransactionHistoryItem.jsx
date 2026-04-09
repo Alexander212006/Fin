@@ -33,7 +33,7 @@ export const TransactionHistoryItem = ({
       </div>
 
       <div className="min-w-0 flex-1">
-        <p className="truncate text-sm font-medium text-zinc-700 sm:text-lg">
+        <p className="truncate text-sm font-medium text-zinc-700 dark:text-zinc-200 sm:text-lg">
           {transaction.title}
         </p>
       </div>
@@ -49,7 +49,7 @@ export const TransactionHistoryItem = ({
       <div className="relative" ref={menuRef}>
         <button
           onClick={onToggleMenu}
-          className="rounded-lg p-1 text-zinc-500 transition hover:bg-zinc-100 hover:text-zinc-800"
+          className="rounded-lg p-1 text-zinc-500 dark:text-zinc-400 transition hover:bg-zinc-100 dark:hover:bg-zinc-700 hover:text-zinc-800"
           aria-label={`${t("dashboard.actions.edit")} ${transaction.title}`}
           aria-expanded={isMenuOpen}
           aria-haspopup="menu"
@@ -58,7 +58,7 @@ export const TransactionHistoryItem = ({
         </button>
 
         {isMenuOpen && (
-          <div className="absolute right-0 top-full z-20 mt-2 w-40 rounded-2xl border border-zinc-200 bg-white p-2 shadow-xl">
+          <div className="absolute right-0 top-full z-20 mt-2 w-40 rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-2 shadow-xl">
             {actions.map((action) => (
               <button
                 key={action.key}
@@ -66,7 +66,7 @@ export const TransactionHistoryItem = ({
                 className={`flex w-full rounded-xl px-3 py-2 text-left text-sm transition ${
                   action.danger
                     ? "text-rose-500 hover:bg-rose-50"
-                    : "text-zinc-700 hover:bg-zinc-100"
+                    : "text-zinc-700 dark:text-zinc-200 hover:bg-zinc-100 dark:hover:bg-zinc-700"
                 }`}
               >
                 {action.label}

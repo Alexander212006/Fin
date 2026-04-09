@@ -19,7 +19,7 @@ function App() {
       toast.custom(
         (toastInstance) => (
           <div
-            className={`pointer-events-auto w-[340px] rounded-[24px] border border-zinc-200 bg-white p-4 shadow-[0_20px_50px_rgba(24,24,27,0.14)] transition-all ${
+            className={`pointer-events-auto w-[340px] rounded-[24px] border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-4 shadow-[0_20px_50px_rgba(24,24,27,0.14)] transition-all ${
               toastInstance.visible
                 ? "translate-y-0 opacity-100"
                 : "translate-y-2 opacity-0"
@@ -31,14 +31,14 @@ function App() {
               </div>
               <div className="min-w-0 flex-1">
                 <div className="flex items-center justify-between gap-3">
-                  <p className="truncate text-sm font-semibold text-zinc-900">
+                  <p className="truncate text-sm font-semibold text-zinc-900 dark:text-zinc-100">
                     {title}
                   </p>
-                  <span className="shrink-0 text-xs text-zinc-400">
+                  <span className="shrink-0 text-xs text-zinc-400 dark:text-zinc-500">
                     {sentAt}
                   </span>
                 </div>
-                <p className="mt-1 text-sm leading-5 text-zinc-600">
+                <p className="mt-1 text-sm leading-5 text-zinc-600 dark:text-zinc-300">
                   {body || "You received a new foreground notification."}
                 </p>
               </div>

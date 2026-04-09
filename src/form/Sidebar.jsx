@@ -21,16 +21,16 @@ export const Sidebar = ({ mobile = false, onClose }) => {
 
   return (
     <aside
-      className={`flex h-full w-67.5 shrink-0 flex-col border-r border-zinc-200 bg-[#f7f7f7] px-5 py-6 ${
+      className={`flex h-full w-67.5 shrink-0 flex-col border-r border-zinc-200 dark:border-zinc-700 bg-[#f7f7f7] dark:bg-zinc-800 px-5 py-6 ${
         mobile ? "shadow-2xl" : ""
       }`}
     >
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold tracking-tight text-zinc-900">Fin</h1>
+        <h1 className="text-3xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">Fin</h1>
         {mobile && (
           <button
             onClick={onClose}
-            className="rounded-xl p-2 text-zinc-600 transition hover:bg-zinc-200"
+            className="rounded-xl p-2 text-zinc-600 dark:text-zinc-300 transition hover:bg-zinc-200 dark:hover:bg-zinc-600"
             aria-label={t("header.closeMenu")}
           >
             <X className="h-5 w-5" />
@@ -49,8 +49,8 @@ export const Sidebar = ({ mobile = false, onClose }) => {
               className={({isActive}) => 
                 `flex w-full items-center gap-4 rounded-2xl px-3 py-3 text-left transition ${
                 isActive
-                  ? "bg-white text-zinc-900 shadow-sm"
-                  : "text-zinc-600 hover:bg-white hover:text-zinc-900"
+                  ? "bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 shadow-sm"
+                  : "text-zinc-600 dark:text-zinc-300 hover:bg-white dark:hover:bg-zinc-800 hover:text-zinc-900"
               }`
               }
             >

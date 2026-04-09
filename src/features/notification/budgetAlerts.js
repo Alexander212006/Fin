@@ -7,7 +7,7 @@ export const DEFAULT_BUDGET_ALERT_SETTINGS = {
 };
 
 const isPositiveNumber = (value) =>
-  typeof value === "number" && Number.isFinite(value) && value >= 0;
+  typeof value === "number" && Number.isFinite(value) && value > 0;
 
 const parseTransactionDate = (value) => {
   if (value instanceof Date && !Number.isNaN(value.getTime())) {

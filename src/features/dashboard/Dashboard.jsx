@@ -22,7 +22,7 @@ export const Dashboard = ({ transactions, setTransactions, currency, languageReg
 
   return (
     <section>
-      <h2 className="mb-6 text-3xl font-semibold tracking-tight text-zinc-800 lg:hidden sm:text-[42px]">
+      <h2 className="mb-6 text-3xl font-semibold tracking-tight text-zinc-800 dark:text-zinc-100 lg:hidden sm:text-[42px]">
         {t("dashboard.title")}
       </h2>
 

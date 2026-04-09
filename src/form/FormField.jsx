@@ -13,11 +13,11 @@ export const FormField = ({ field, value, onChange, idPrefix = "field" }) => {
   const id = `${idPrefix}-${name}`;
   const wrapperClassName = colSpan === "2" ? "sm:col-span-2" : "";
   const sharedClassName =
-    "w-full rounded-2xl border border-zinc-300 px-4 py-3 text-sm outline-none transition focus:border-sky-500 sm:text-base";
+    "w-full rounded-2xl border border-zinc-300 dark:border-zinc-600 px-4 py-3 text-sm outline-none transition focus:border-sky-500 sm:text-base";
 
   return (
     <div className={wrapperClassName}>
-      <label htmlFor={id} className="mb-2 block text-sm font-medium text-zinc-700">
+      <label htmlFor={id} className="mb-2 block text-sm font-medium text-zinc-700 dark:text-zinc-200">
         {label}
       </label>
 

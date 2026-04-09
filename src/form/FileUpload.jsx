@@ -40,14 +40,14 @@ export const FileUpload = ({ setFile }) => {
       <button
         type="button"
         onClick={() => fileInputRef.current.click()}
-        className="rounded-2xl border border-zinc-200 bg-white px-4 py-3 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50"
+        className="rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-4 py-3 text-sm font-medium text-zinc-700 dark:text-zinc-200 transition hover:bg-zinc-50 dark:hover:bg-zinc-700"
       >
         {t("forms.chooseFile")}
       </button>
 
       {/* Show selected file */}
       {fileName && (
-        <p className="text-sm text-zinc-600">{t("forms.selected")} {fileName} 
+        <p className="text-sm text-zinc-600 dark:text-zinc-300">{t("forms.selected")} {fileName} 
           <button
           onClick={handleRemove}
           className="p-1 rounded hover:bg-gray-200 transition">

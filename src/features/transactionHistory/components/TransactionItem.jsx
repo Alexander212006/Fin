@@ -16,7 +16,7 @@ export const TransactionItem = ({ item, currency, languageRegion }) => {
     );
 
   return (
-    <tr className="border-t border-zinc-200 text-sm text-zinc-700">
+    <tr className="border-t border-zinc-200 dark:border-zinc-700 text-sm text-zinc-700 dark:text-zinc-200">
       <td className="px-5 py-4">
         <div className="flex items-center gap-3">
           <div
@@ -32,7 +32,7 @@ export const TransactionItem = ({ item, currency, languageRegion }) => {
               <TrendingDown className="h-4 w-4" />
             )}
           </div>
-          <span className="font-medium text-zinc-800">{item.title}</span>
+          <span className="font-medium text-zinc-800 dark:text-zinc-100">{item.title}</span>
         </div>
       </td>
       <td className="px-5 py-4">{item.category || t("history.emptyValue")}</td>
