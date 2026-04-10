@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   Bell,
   ChevronRight,
@@ -21,6 +21,7 @@ import { Toggle } from "./components/Toggle";
 import { setInitialUserProfile } from "./utils/setInitialUserProfile";
 import {
   loadStoredPassword,
+  loadStoredPasswordUpdatedAt,
   saveStoredPassword,
 } from "./utils/passwordManager";
 import { exportFinancialDataCsv } from "./utils/exportFinancialData";
@@ -38,6 +39,51 @@ const user = {
   firstName: "Alex",
   lastName: "Francisco",
   email: "alex@gmail.com",
+};
+
+const getRelativePasswordUpdateText = (updatedAt, nowMs, t) => {
+  if (!updatedAt) {
+    return t(
+      "settings.sections.security.changePasswordDescriptionNever",
+      "Password has not been updated yet",
+    );
+  }
+
+  const diffMs = Math.max(0, nowMs - updatedAt.getTime());
+  const diffMinutes = Math.floor(diffMs / (1000 * 60));
+
+  if (diffMinutes < 1) {
+    return t(
+      "settings.sections.security.changePasswordDescriptionJustNow",
+      "Last updated just now",
+    );
+  }
+
+  if (diffMinutes < 60) {
+    return t(
+      "settings.sections.security.changePasswordDescriptionMinutesAgo",
+      "Last updated {count} minutes ago",
+      { count: String(diffMinutes) },
+    );
+  }
+
+  const diffHours = Math.floor(diffMinutes / 60);
+
+  if (diffHours < 24) {
+    return t(
+      "settings.sections.security.changePasswordDescriptionHoursAgo",
+      "Last updated {count} hours ago",
+      { count: String(diffHours) },
+    );
+  }
+
+  const diffDays = Math.floor(diffHours / 24);
+
+  return t(
+    "settings.sections.security.changePasswordDescriptionDaysAgo",
+    "Last updated {count} days ago",
+    { count: String(diffDays) },
+  );
 };
 
 export const Setting = ({
@@ -64,6 +110,15 @@ export const Setting = ({
   );
   const [isEditingProfile, setIsEditingProfile] = useState(false);
   const [isChangingPassword, setIsChangingPassword] = useState(false);
+  const [currentTimeMs, setCurrentTimeMs] = useState(() => Date.now());
+
+  useEffect(() => {
+    const intervalId = window.setInterval(() => {
+      setCurrentTimeMs(Date.now());
+    }, 60 * 1000);
+
+    return () => window.clearInterval(intervalId);
+  }, []);
 
   const selectedCurrency =
     CURRENCIES.find(({ code }) => code === currency) ?? CURRENCIES[0];
@@ -77,6 +132,12 @@ export const Setting = ({
   const monthlyLimitValue = Number(budgetAlertSettings?.monthlyLimit) || 0;
   const isBudgetAlertEnabled = Boolean(budgetAlertSettings?.enabled);
   const hasStoredPassword = Boolean(loadStoredPassword());
+  const passwordLastUpdatedAt = loadStoredPasswordUpdatedAt();
+  const passwordLastUpdatedText = getRelativePasswordUpdateText(
+    passwordLastUpdatedAt,
+    currentTimeMs,
+    t,
+  );
   const budgetUsageText = `${formatCurrency(monthlyExpense, currency, languageRegion)} / ${formatCurrency(monthlyLimitValue, currency, languageRegion)}`;
 
   const handleSaveEdit = (updatedProfile) => {
@@ -208,10 +269,7 @@ export const Setting = ({
     saveStoredPassword(newPassword);
     setIsChangingPassword(false);
     toast.success(
-      t(
-        "settings.changePassword.success",
-        "Password updated successfully.",
-      ),
+      t("settings.changePassword.success", "Password updated successfully."),
     );
     return true;
   };
@@ -239,10 +297,7 @@ export const Setting = ({
     }
 
     toast.success(
-      t(
-        "settings.dangerZone.exportSuccess",
-        "Financial data exported as CSV.",
-      ),
+      t("settings.dangerZone.exportSuccess", "Financial data exported as CSV."),
     );
   };
 
@@ -429,7 +484,9 @@ export const Setting = ({
             <SettingRow
               icon={Moon}
               title={t("settings.sections.appearance.darkMode")}
-              description={t("settings.sections.appearance.darkModeDescription")}
+              description={t(
+                "settings.sections.appearance.darkModeDescription",
+              )}
               action={
                 <Toggle
                   enabled={darkMode}
@@ -443,7 +500,9 @@ export const Setting = ({
               description={t(
                 "settings.sections.appearance.accentColorDescription",
               )}
-              action={<ChevronRight className="h-5 w-5 text-zinc-400 dark:text-zinc-500" />}
+              action={
+                <ChevronRight className="h-5 w-5 text-zinc-400 dark:text-zinc-500" />
+              }
               noBorder
             />
           </SectionCard>
@@ -455,9 +514,7 @@ export const Setting = ({
             <SettingRow
               icon={Lock}
               title={t("settings.sections.security.changePassword")}
-              description={t(
-                "settings.sections.security.changePasswordDescription",
-              )}
+              description={passwordLastUpdatedText}
               action={
                 <button
                   type="button"
