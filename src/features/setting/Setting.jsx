@@ -11,12 +11,19 @@ import {
   User,
   Wallet,
 } from "lucide-react";
+import toast from "react-hot-toast";
 
 import { EditProfileForm } from "./components/EditProfileForm";
+import { ChangePasswordForm } from "./components/ChangePasswordForm";
 import { SectionCard } from "./components/SectionCard";
 import { SettingRow } from "./components/SettingRow";
 import { Toggle } from "./components/Toggle";
 import { setInitialUserProfile } from "./utils/setInitialUserProfile";
+import {
+  loadStoredPassword,
+  saveStoredPassword,
+} from "./utils/passwordManager";
+import { exportFinancialDataCsv } from "./utils/exportFinancialData";
 import { CURRENCIES, LANGUAGE_REGIONS } from "../../constants/currencies";
 import { useI18n } from "../../i18n";
 import { formatCurrency } from "../../utils/currency";
@@ -56,6 +63,7 @@ export const Setting = ({
     setInitialUserProfile(user),
   );
   const [isEditingProfile, setIsEditingProfile] = useState(false);
+  const [isChangingPassword, setIsChangingPassword] = useState(false);
 
   const selectedCurrency =
     CURRENCIES.find(({ code }) => code === currency) ?? CURRENCIES[0];
@@ -67,6 +75,8 @@ export const Setting = ({
     [transactions],
   );
   const monthlyLimitValue = Number(budgetAlertSettings?.monthlyLimit) || 0;
+  const isBudgetAlertEnabled = Boolean(budgetAlertSettings?.enabled);
+  const hasStoredPassword = Boolean(loadStoredPassword());
   const budgetUsageText = `${formatCurrency(monthlyExpense, currency, languageRegion)} / ${formatCurrency(monthlyLimitValue, currency, languageRegion)}`;
 
   const handleSaveEdit = (updatedProfile) => {
@@ -137,6 +147,105 @@ export const Setting = ({
     }
   };
 
+  const handleChangePassword = ({
+    currentPassword,
+    newPassword,
+    confirmPassword,
+  }) => {
+    const savedPassword = loadStoredPassword();
+    const hasExistingPassword = Boolean(savedPassword);
+
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      toast.error(
+        t(
+          "settings.changePassword.validation.required",
+          "Please fill in all password fields.",
+        ),
+      );
+      return false;
+    }
+
+    if (hasExistingPassword && currentPassword !== savedPassword) {
+      toast.error(
+        t(
+          "settings.changePassword.validation.currentMismatch",
+          "Current password is incorrect.",
+        ),
+      );
+      return false;
+    }
+
+    if (newPassword.length < 8) {
+      toast.error(
+        t(
+          "settings.changePassword.validation.minLength",
+          "New password must be at least 8 characters.",
+        ),
+      );
+      return false;
+    }
+
+    if (hasExistingPassword && newPassword === currentPassword) {
+      toast.error(
+        t(
+          "settings.changePassword.validation.sameAsCurrent",
+          "New password must be different from current password.",
+        ),
+      );
+      return false;
+    }
+
+    if (newPassword !== confirmPassword) {
+      toast.error(
+        t(
+          "settings.changePassword.validation.confirmMismatch",
+          "New password and confirmation do not match.",
+        ),
+      );
+      return false;
+    }
+
+    saveStoredPassword(newPassword);
+    setIsChangingPassword(false);
+    toast.success(
+      t(
+        "settings.changePassword.success",
+        "Password updated successfully.",
+      ),
+    );
+    return true;
+  };
+
+  const handleExportFinancialData = () => {
+    if (!transactions?.length) {
+      toast.error(
+        t(
+          "settings.dangerZone.exportEmpty",
+          "No financial data available to export.",
+        ),
+      );
+      return;
+    }
+
+    const success = exportFinancialDataCsv(transactions);
+    if (!success) {
+      toast.error(
+        t(
+          "settings.dangerZone.exportFailed",
+          "Unable to export CSV right now.",
+        ),
+      );
+      return;
+    }
+
+    toast.success(
+      t(
+        "settings.dangerZone.exportSuccess",
+        "Financial data exported as CSV.",
+      ),
+    );
+  };
+
   return (
     <section>
       <div className="mb-6">
@@ -153,6 +262,13 @@ export const Setting = ({
           currentUser={currentUser}
           onSave={handleSaveEdit}
           onCancel={() => setIsEditingProfile(false)}
+        />
+      )}
+      {isChangingPassword && (
+        <ChangePasswordForm
+          onSubmit={handleChangePassword}
+          hasStoredPassword={hasStoredPassword}
+          onCancel={() => setIsChangingPassword(false)}
         />
       )}
 
@@ -251,7 +367,7 @@ export const Setting = ({
               )}
               action={
                 <Toggle
-                  enabled={Boolean(budgetAlertSettings?.enabled)}
+                  enabled={isBudgetAlertEnabled}
                   onToggle={handleBudgetAlertToggle}
                 />
               }
@@ -273,7 +389,12 @@ export const Setting = ({
                   step="0.01"
                   value={budgetAlertSettings?.monthlyLimit ?? 0}
                   onChange={handleBudgetLimitChange}
-                  className="w-32 rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-[#fafafa] dark:bg-zinc-800 px-3 py-2 text-right text-sm font-medium text-zinc-700 dark:text-zinc-200 outline-none transition focus:border-zinc-400 dark:focus:border-zinc-500"
+                  className={`w-32 rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-[#fafafa] dark:bg-zinc-800 px-3 py-2 text-right text-sm font-medium text-zinc-700 dark:text-zinc-200 outline-none transition focus:border-zinc-400 dark:focus:border-zinc-500 ${
+                    !isBudgetAlertEnabled
+                      ? "cursor-not-allowed opacity-50 focus:border-zinc-200 dark:focus:border-zinc-700"
+                      : ""
+                  }`}
+                  disabled={!isBudgetAlertEnabled}
                 />
               }
             />
@@ -288,7 +409,12 @@ export const Setting = ({
                 "Current expenses compared to your monthly limit.",
               )}
               action={
-                <span className="rounded-2xl bg-[#fafafa] dark:bg-zinc-800 px-3 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-200">
+                <span
+                  aria-disabled={!isBudgetAlertEnabled}
+                  className={`rounded-2xl bg-[#fafafa] dark:bg-zinc-800 px-3 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-200 ${
+                    !isBudgetAlertEnabled ? "opacity-50" : ""
+                  }`}
+                >
                   {budgetUsageText}
                 </span>
               }
@@ -333,7 +459,11 @@ export const Setting = ({
                 "settings.sections.security.changePasswordDescription",
               )}
               action={
-                <button className="rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-[#fafafa] dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-200">
+                <button
+                  type="button"
+                  onClick={() => setIsChangingPassword(true)}
+                  className="rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-[#fafafa] dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-200"
+                >
                   {t("settings.sections.security.update")}
                 </button>
               }
@@ -406,7 +536,11 @@ export const Setting = ({
               {t("settings.dangerZone.subtitle")}
             </p>
             <div className="mt-5 space-y-3">
-              <button className="w-full rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-[#fafafa] dark:bg-zinc-800 px-4 py-3 text-left text-sm font-medium text-zinc-700 dark:text-zinc-200 transition hover:bg-zinc-50 dark:hover:bg-zinc-700">
+              <button
+                type="button"
+                onClick={handleExportFinancialData}
+                className="w-full rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-[#fafafa] dark:bg-zinc-800 px-4 py-3 text-left text-sm font-medium text-zinc-700 dark:text-zinc-200 transition hover:bg-zinc-50 dark:hover:bg-zinc-700"
+              >
                 {t("settings.dangerZone.exportData")}
               </button>
               <button className="w-full rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-left text-sm font-medium text-rose-600 transition hover:bg-rose-100">
