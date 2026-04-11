@@ -1,57 +1,16 @@
-import { useState } from "react";
 import { X } from "lucide-react";
 import { FormRenderer } from "../../../form/FormRenderer";
-import {
-  EDIT_TRANSACTION_FIELDS,
-  getInitialEditTransactionValues,
-} from "../config/editTransactionFields";
 import { useI18n } from "../../../i18n";
+import { useEditTransactionForm } from "../hooks/useEditTransactionForm";
+import { buildUpdatedTransaction } from "../utils/editTransaction";
 
 export const EditTransactionForm = ({ transaction, onSave, onCancel }) => {
   const { t } = useI18n();
-  const [formData, setFormData] = useState(() =>
-    getInitialEditTransactionValues(transaction),
-  );
-  const fields = EDIT_TRANSACTION_FIELDS.map((field) => ({
-    ...field,
-    label: t(
-      `forms.fields.${field.name === "source" ? "source" : field.name}`,
-      field.label,
-    ),
-    placeholder:
-      field.name === "title"
-        ? t("forms.placeholders.enterTitle", field.placeholder)
-        : field.name === "amount"
-          ? t("forms.placeholders.enterAmount", field.placeholder)
-          : field.name === "notes"
-            ? t("forms.placeholders.addNotes", field.placeholder)
-            : field.placeholder,
-    options:
-      field.name === "type"
-        ? [
-            { label: t("history.types.income", "Income"), value: "income" },
-            { label: t("history.types.expense", "Expense"), value: "expense" },
-          ]
-        : field.options,
-  }));
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    setFormData((prev) => ({
-      ...prev,
-      [name]: name === "amount" ? Number(value) : value,
-    }));
-  };
+  const { fields, formData, handleChange } = useEditTransactionForm(transaction);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    const { wallet, ...transactionWithoutWallet } = transaction || {};
-    const updatedTransaction = {
-      ...transactionWithoutWallet,
-      ...formData,
-    };
+    const updatedTransaction = buildUpdatedTransaction(transaction, formData);
     onSave(updatedTransaction);
   };
 

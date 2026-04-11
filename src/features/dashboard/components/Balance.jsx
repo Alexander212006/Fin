@@ -1,7 +1,7 @@
 import { Wallet } from "lucide-react";
 import { useI18n } from "../../../i18n";
 
-export const Balance = ({ balance }) => {
+export const Balance = ({ balance, accountBalances = [] }) => {
   const { t } = useI18n();
 
   return (
@@ -19,6 +19,19 @@ export const Balance = ({ balance }) => {
       <p className="text-4xl font-semibold tracking-tight text-zinc-800 dark:text-zinc-100 sm:text-[48px]">
         {balance}
       </p>
+
+      <div className="mt-8 space-y-3 border-t border-zinc-200 pt-5 dark:border-zinc-700">
+        {accountBalances.map((account) => (
+          <div key={account.value} className="flex items-center justify-between gap-3">
+            <p className="text-sm text-zinc-600 dark:text-zinc-300">
+              {t(`options.accounts.${account.value}`, account.label)}
+            </p>
+            <p className="text-sm font-medium text-zinc-800 dark:text-zinc-100">
+              {account.balance}
+            </p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

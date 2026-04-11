@@ -568,12 +568,7 @@ export const Setting = ({
                     : t("settings.appPreferences.disabled", "Disabled")}
                 </span>
               </div>
-              <div className="rounded-2xl bg-[#f7f7f7] dark:bg-zinc-800 p-4">
-                {t("settings.appPreferences.loginSecurity")}:{" "}
-                <span className="font-medium text-zinc-800 dark:text-zinc-100">
-                  {t("settings.appPreferences.biometric")}
-                </span>
-              </div>
+
               <div className="rounded-2xl bg-[#f7f7f7] dark:bg-zinc-800 p-4">
                 {t("settings.appPreferences.themeMode")}:{" "}
                 <span className="font-medium text-zinc-800 dark:text-zinc-100">

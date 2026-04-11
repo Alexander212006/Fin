@@ -1,24 +1,45 @@
-import { formatCurrency } from "../../utils/currency";
+
 import { Balance } from "./components/Balance";
 import { TransactionHistory } from "./components/TransactionHistory";
 import { BudgetChart } from "./components/BudgetChart";
-import { useMemo } from "react";
 import { useI18n } from "../../i18n";
+import { useDashboardBalance } from "./hooks/useDashboardBalance";
+import { ACCOUNTS } from "../../constants/accounts";
+import { formatCurrency } from "../../utils/currency";
+import { useMemo } from "react";
 
 export const Dashboard = ({ transactions, setTransactions, currency, languageRegion }) => {
   const { t } = useI18n();
-  const balance = useMemo(() => {
-    const total = transactions.reduce(
-      (acc, transaction) =>
-        acc +
-        (transaction.type === "income"
-          ? transaction.amount
-          : -transaction.amount),
-      0,
-    );
+  const balance = useDashboardBalance({
+    transactions,
+    currency,
+    languageRegion,
+  });
 
-    return formatCurrency(total, currency, languageRegion);
-  }, [transactions, currency, languageRegion]);
+  const accountBalances = useMemo(() => {
+  const totals = {};
+
+  transactions.forEach((transaction) => {
+    const amount = Number(transaction.amount) || 0;
+    const value =
+      transaction.type === "income" ? amount : -amount;
+
+    totals[transaction.account] =
+      (totals[transaction.account] || 0) + value;
+  });
+
+  return ACCOUNTS.map((account) => ({
+    value: account.value,
+    label: account.label,
+    balance: formatCurrency(
+      totals[account.value] || 0,
+      currency,
+      languageRegion
+    ),
+  }));
+  
+}, [transactions, currency, languageRegion]);
+
 
   return (
     <section>
@@ -28,7 +49,7 @@ export const Dashboard = ({ transactions, setTransactions, currency, languageReg
 
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-[360px_minmax(0,1fr)]">
         <div className="space-y-6">
-          <Balance balance={balance} />
+          <Balance balance={balance} accountBalances={accountBalances} />
           <TransactionHistory
             transactions={transactions}
             setTransactions={setTransactions}

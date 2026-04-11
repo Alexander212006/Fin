@@ -26,14 +26,16 @@ export const Header = ({ onOpenMenu }) => {
 
       <div className="flex items-center gap-3">
         <button
-          className="   p-3 text-zinc-600 dark:text-zinc-300  transition hover:bg-zinc-50 dark:hover:bg-zinc-700"
+          className="rounded-2xl p-3 text-zinc-600 dark:text-zinc-300 transition hover:bg-zinc-50 dark:hover:bg-zinc-700"
           aria-label={t("header.notifications")}
         >
           <Bell className="h-5 w-5" />
         </button>
 
         <button
-          
+          type="button"
+          className="flex items-center gap-3 rounded-2xl px-1 py-1 text-left transition hover:bg-zinc-50 dark:hover:bg-zinc-700"
+          aria-label={t("header.profile", "Profile")}
         >
           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-zinc-900 text-sm font-semibold text-white">
             AR
