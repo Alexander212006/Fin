@@ -208,4 +208,4 @@ export const BudgetChartView = ({
       </div>
     </div>
   </div>
-);
+)
