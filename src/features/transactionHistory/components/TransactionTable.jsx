@@ -6,9 +6,26 @@ import { ACCOUNTS } from "../../../constants/accounts";
 import { TrendingDown, TrendingUp } from "lucide-react";
 import { getTransactionAccount } from "../utils/buildTransactions";
 import { useI18n } from "../../../i18n";
+import { handleExportFinancialData } from "../../setting/utils/handleExportFinancialData";
 
 export const TransactionTable = ({ transactions, currency, languageRegion }) => {
   const { t } = useI18n();
+
+  const handleExportTransactions = () => {
+    handleExportFinancialData({
+      transactions,
+      t,
+      messages: {
+        emptyKey: "history.exportEmpty",
+        emptyFallback: "No transactions available to export.",
+        failedKey: "history.exportFailed",
+        failedFallback: "Unable to export CSV right now.",
+        successKey: "history.exportSuccess",
+        successFallback: "Transactions exported as CSV.",
+      },
+    });
+  };
+
   return (
     <div className="rounded-[28px] border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-4 sm:p-6">
       <div className="mb-5 flex items-center justify-between gap-3">
@@ -27,7 +44,11 @@ export const TransactionTable = ({ transactions, currency, languageRegion }) => 
             )}
           </p>
         </div>
-        <button className="rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-[#fafafa] dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-200">
+        <button
+          type="button"
+          onClick={handleExportTransactions}
+          className="rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-[#fafafa] dark:bg-zinc-800 px-4 py-2 text-sm font-medium text-zinc-700 dark:text-zinc-200"
+        >
           {t("history.export")}
         </button>
       </div>
@@ -129,3 +150,4 @@ export const TransactionTable = ({ transactions, currency, languageRegion }) => 
     </div>
   );
 };
+
