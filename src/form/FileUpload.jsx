@@ -1,13 +1,13 @@
 import { X } from "lucide-react";
-import { useRef, useState } from "react";
+import { memo, useCallback, useRef, useState } from "react";
 import { useI18n } from "../i18n";
 
-export const FileUpload = ({ setFile }) => {
+export const FileUpload = memo(({ setFile }) => {
   const { t } = useI18n();
   const fileInputRef = useRef(null);
   const [fileName, setFileName] = useState("");
 
-  const handleFileChange = (e) => {
+  const handleFileChange = useCallback((e) => {
     const file = e.target.files[0];
 
     if (!file) {
@@ -17,13 +17,13 @@ export const FileUpload = ({ setFile }) => {
 
     setFile(file);
     setFileName(file.name);
-  };
+  }, [setFile]);
 
-  const handleRemove = () => {
+  const handleRemove = useCallback(() => {
     setFile(null);
     setFileName("");
     fileInputRef.current.value = null;
-  };
+  }, [setFile]);
 
   return (
     <div className="space-y-3">
@@ -32,14 +32,14 @@ export const FileUpload = ({ setFile }) => {
         type="file"
         accept="image/jpg, image/jpeg, image/png"
         ref={fileInputRef}
-        onChange={(e) => handleFileChange(e)}
+        onChange={handleFileChange}
         className="hidden"
       />
 
       {/* Button */}
       <button
         type="button"
-        onClick={() => fileInputRef.current.click()}
+        onClick={() => fileInputRef.current?.click()}
         className="rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 px-4 py-3 text-sm font-medium text-zinc-700 dark:text-zinc-200 transition hover:bg-zinc-50 dark:hover:bg-zinc-700"
       >
         {t("forms.chooseFile")}
@@ -57,4 +57,6 @@ export const FileUpload = ({ setFile }) => {
       )}
     </div>
   );
-};
+})
+
+

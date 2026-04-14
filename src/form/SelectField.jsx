@@ -1,6 +1,7 @@
+import { memo } from "react";
 import { useI18n } from "../i18n";
 
-export const SelectField = ({
+export const SelectField = memo(({
   label,
   icon: Icon,
   value,
@@ -31,4 +32,6 @@ export const SelectField = ({
       </div>
     </label>
   );
-};
+} )
+
+

@@ -1,3 +1,4 @@
+import { useCallback } from "react";
 import { useForm } from "../../../hooks/useForm";
 import { validateIncomeForm } from "../utils/validateIncomeForm";
 import { buildIncomeTransaction } from "../utils/buildIncomeTransaction";
@@ -7,7 +8,7 @@ export const useIncomeForm = ({ toast, setTransactions }) => {
   const { form, file, setFile, resetForm, updateField } =
     useForm(INITIAL_FORM_STATE);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = useCallback((e) => {
     e.preventDefault();
 
     const error = validateIncomeForm(form, file);
@@ -21,7 +22,7 @@ export const useIncomeForm = ({ toast, setTransactions }) => {
     setTransactions((prev) => [...prev, newTransaction]);
     toast.success("Income added successfully!");
     resetForm();
-  };
+  }, [file, form, resetForm, setTransactions, toast]);
 
   return { form, setFile, updateField, handleSubmit };
 };

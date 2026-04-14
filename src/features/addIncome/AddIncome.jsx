@@ -1,15 +1,32 @@
+import { useCallback, useMemo, memo } from "react";
 import { BadgeDollarSign, Check, Image } from "lucide-react";
 import { FileUpload } from "../../form/FileUpload";
 import { useIncomeForm } from "./hooks/useIncomeForm";
 import { incomeFieldConfig } from "./config/formFields";
 import { useI18n } from "../../i18n";
 
-export const AddIncome = ({ toast, setTransactions }) => {
+export const AddIncome = memo(({ toast, setTransactions }) => {
   const { t } = useI18n();
   const { form, setFile, updateField, handleSubmit } = useIncomeForm({
     toast,
     setTransactions,
   });
+  const handleFormSubmit = useCallback((event) => {
+    handleSubmit(event);
+  }, [handleSubmit]);
+  const handleNotesChange = useCallback((event) => {
+    updateField("notes", event.target.value);
+  }, [updateField]);
+  const fieldChangeHandlers = useMemo(
+    () =>
+      Object.fromEntries(
+        incomeFieldConfig.map(({ name }) => [
+          name,
+          (event) => updateField(name, event.target.value),
+        ]),
+      ),
+    [updateField],
+  );
 
   return (
     <section>
@@ -32,7 +49,7 @@ export const AddIncome = ({ toast, setTransactions }) => {
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
         <form
           className="rounded-[30px] border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-5 sm:p-7"
-          onSubmit={(e) => handleSubmit(e)}
+          onSubmit={handleFormSubmit}
         >
           <div className="mb-8 flex items-start gap-4">
             <div className="rounded-2xl bg-emerald-100 p-3 text-emerald-600">
@@ -55,7 +72,7 @@ export const AddIncome = ({ toast, setTransactions }) => {
                   <Component
                     {...props}
                     value={form[name]}
-                    onChange={(e) => updateField(name, e.target.value)}
+                    onChange={fieldChangeHandlers[name]}
                   />
                 </div>
               ),
@@ -70,7 +87,7 @@ export const AddIncome = ({ toast, setTransactions }) => {
                   <textarea
                     rows={5}
                     value={form.notes}
-                    onChange={(e) => updateField("notes", e.target.value)}
+                    onChange={handleNotesChange}
                     placeholder={t("addIncome.notesPlaceholder")}
                     className="w-full resize-none bg-transparent text-sm text-zinc-800 dark:text-zinc-100 outline-none placeholder:text-zinc-400 dark:placeholder:text-zinc-500 sm:text-base"
                   />
@@ -134,4 +151,4 @@ export const AddIncome = ({ toast, setTransactions }) => {
       </div>
     </section>
   );
-};
+})
