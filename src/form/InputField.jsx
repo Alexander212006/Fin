@@ -1,7 +1,7 @@
 import { memo } from "react";
 
 export const InputField = memo(
-  ({ label, placeholder, icon: Icon, type = "text", value, onChange }) => {
+  ({ label, placeholder, icon: Icon, type = "text", name, value, onChange }) => {
     return (
       <label className="block">
         <span className="mb-3 block text-sm font-medium text-zinc-700 dark:text-zinc-200 sm:text-base">
@@ -11,6 +11,7 @@ export const InputField = memo(
           <Icon className="h-5 w-5 text-zinc-400 dark:text-zinc-500" />
           <input
             type={type}
+            name={name}
             value={value}
             onChange={onChange}
             placeholder={placeholder}

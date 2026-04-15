@@ -1,15 +1,35 @@
+import { memo, useCallback } from "react";
 import { Check, Image, Receipt } from "lucide-react";
 import { FileUpload } from "../../form/FileUpload";
 import { expenseFieldConfig } from "./config/formFields";
 import { useExpenseForm } from "./hooks/useExpenseForm";
 import { useI18n } from "../../i18n";
 
-export const AddExpense = ({ setTransactions, toast }) => {
+export const AddExpense = memo(({ setTransactions, toast }) => {
   const { t } = useI18n();
   const { form, setFile, updateField, handleSubmit } = useExpenseForm({
     toast,
     setTransactions,
   });
+  const handleFormSubmit = useCallback(
+    (event) => {
+      handleSubmit(event);
+    },
+    [handleSubmit],
+  );
+  const handleNotesChange = useCallback(
+    (event) => {
+      updateField("notes", event.target.value);
+    },
+    [updateField],
+  );
+  const handleChange = useCallback(
+    (event) => {
+      const { name, value } = event.target;
+      updateField(name, value);
+    },
+    [updateField],
+  );
 
   return (
     <section>
@@ -32,7 +52,7 @@ export const AddExpense = ({ setTransactions, toast }) => {
       <div className="grid grid-cols-1 gap-6 xl:grid-cols-[minmax(0,1fr)_360px]">
         <form
           className="rounded-[30px] border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-5 sm:p-7"
-          onSubmit={(e) => handleSubmit(e)}
+          onSubmit={handleFormSubmit}
         >
           <div className="mb-8 flex items-start gap-4">
             <div className="rounded-2xl bg-rose-100 p-3 text-rose-500">
@@ -54,8 +74,9 @@ export const AddExpense = ({ setTransactions, toast }) => {
                 <div key={name} className={colSpan}>
                   <Component
                     {...props}
+                    name={name}
                     value={form[name]}
-                    onChange={(e) => updateField(name, e.target.value)}
+                    onChange={handleChange}
                   />
                 </div>
               ),
@@ -70,9 +91,7 @@ export const AddExpense = ({ setTransactions, toast }) => {
                   <textarea
                     rows={5}
                     value={form.notes}
-                    onChange={(e) => {
-                      updateField("notes", e.target.value);
-                    }}
+                    onChange={handleNotesChange}
                     placeholder={t("addExpense.notesPlaceholder")}
                     className="w-full resize-none bg-transparent text-sm text-zinc-800 dark:text-zinc-100 outline-none placeholder:text-zinc-400 dark:placeholder:text-zinc-500 sm:text-base"
                   />
@@ -133,4 +152,4 @@ export const AddExpense = ({ setTransactions, toast }) => {
       </div>
     </section>
   );
-};
+});

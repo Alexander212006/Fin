@@ -1,4 +1,4 @@
-import { useCallback, useMemo, memo } from "react";
+import { useCallback, memo } from "react";
 import { BadgeDollarSign, Check, Image } from "lucide-react";
 import { FileUpload } from "../../form/FileUpload";
 import { useIncomeForm } from "./hooks/useIncomeForm";
@@ -11,20 +11,23 @@ export const AddIncome = memo(({ toast, setTransactions }) => {
     toast,
     setTransactions,
   });
-  const handleFormSubmit = useCallback((event) => {
-    handleSubmit(event);
-  }, [handleSubmit]);
-  const handleNotesChange = useCallback((event) => {
-    updateField("notes", event.target.value);
-  }, [updateField]);
-  const fieldChangeHandlers = useMemo(
-    () =>
-      Object.fromEntries(
-        incomeFieldConfig.map(({ name }) => [
-          name,
-          (event) => updateField(name, event.target.value),
-        ]),
-      ),
+  const handleFormSubmit = useCallback(
+    (event) => {
+      handleSubmit(event);
+    },
+    [handleSubmit],
+  );
+  const handleNotesChange = useCallback(
+    (event) => {
+      updateField("notes", event.target.value);
+    },
+    [updateField],
+  );
+  const handleChange = useCallback(
+    (event) => {
+      const { name, value } = event.target;
+      updateField(name, value);
+    },
     [updateField],
   );
 
@@ -71,8 +74,9 @@ export const AddIncome = memo(({ toast, setTransactions }) => {
                 <div key={name} className={colSpan}>
                   <Component
                     {...props}
+                    name={name}
                     value={form[name]}
-                    onChange={fieldChangeHandlers[name]}
+                    onChange={handleChange}
                   />
                 </div>
               ),
@@ -134,7 +138,9 @@ export const AddIncome = memo(({ toast, setTransactions }) => {
 
         <div className="space-y-6">
           <div className="rounded-[30px] border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-6 sm:p-7">
-            <h3 className="text-2xl font-medium text-zinc-800 dark:text-zinc-100">{t("addIncome.quickTips")}</h3>
+            <h3 className="text-2xl font-medium text-zinc-800 dark:text-zinc-100">
+              {t("addIncome.quickTips")}
+            </h3>
             <div className="mt-5 space-y-4 text-sm text-zinc-600 dark:text-zinc-300 sm:text-base">
               <div className="rounded-2xl bg-[#f7f7f7] dark:bg-zinc-800 p-4">
                 {t("addIncome.tips.clearTitles")}
@@ -151,4 +157,4 @@ export const AddIncome = memo(({ toast, setTransactions }) => {
       </div>
     </section>
   );
-})
+});
