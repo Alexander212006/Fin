@@ -14,13 +14,17 @@ export const HistoryView = memo(
     currency,
     languageRegion,
   }) => {
-    const statCards = getHistoryStatCards({
-      t,
-      summary,
-      month,
-      currency,
-      languageRegion,
-    });
+    const statCards = useMemo(
+      () =>
+        getHistoryStatCards({
+          t,
+          summary,
+          month,
+          currency,
+          languageRegion,
+        }),
+      [t, summary, month, currency, languageRegion],
+    );
 
     return (
       <section>

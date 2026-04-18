@@ -15,7 +15,7 @@ import {
 } from "../constants/transactionConstants";
 import { useI18n } from "../../../i18n";
 
-const FilterBarComponent = ({
+export const FilterBar = memo(({
   selectedDate,
   setSelectedDate,
   selectedType,
@@ -117,6 +117,4 @@ const FilterBarComponent = ({
       </div>
     </div>
   );
-};
-
-export const FilterBar = memo(FilterBarComponent);
+});
