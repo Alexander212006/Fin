@@ -34,8 +34,8 @@ export const useTransactionHistory = ({ transactions }) => {
     [filteredTransactions],
   );
 
-  return {
-    filters: {
+  const filters = useMemo(
+    () => ({
       selectedDate,
       setSelectedDate,
       selectedType,
@@ -44,7 +44,12 @@ export const useTransactionHistory = ({ transactions }) => {
       setSelectedAccount,
       searchTransaction,
       setSearchTransaction,
-    },
+    }),
+    [selectedDate, selectedType, selectedAccount, searchTransaction],
+  );
+
+  return {
+    filters,
     filteredTransactions,
     summary,
   };

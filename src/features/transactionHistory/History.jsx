@@ -1,8 +1,9 @@
+import { memo } from "react";
 import { useI18n } from "../../i18n";
 import { HistoryView } from "./components/HistoryView";
 import { useHistoryData } from "./hook/useHistoryData";
 
-export const History = ({ transactions, currency, languageRegion }) => {
+export const History = memo(({ transactions, currency, languageRegion }) => {
   const { t } = useI18n();
   const { filters, filteredTransactions, summary, month } = useHistoryData({
     transactions,
@@ -20,4 +21,5 @@ export const History = ({ transactions, currency, languageRegion }) => {
       languageRegion={languageRegion}
     />
   );
-};
+})
+

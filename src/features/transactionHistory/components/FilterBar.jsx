@@ -1,3 +1,4 @@
+import { memo, useCallback } from "react";
 import {
   Search,
   Funnel,
@@ -14,7 +15,7 @@ import {
 } from "../constants/transactionConstants";
 import { useI18n } from "../../../i18n";
 
-export const FilterBar = ({
+const FilterBarComponent = ({
   selectedDate,
   setSelectedDate,
   selectedType,
@@ -26,6 +27,34 @@ export const FilterBar = ({
 }) => {
   const { t } = useI18n();
 
+  const handleSearchChange = useCallback(
+    (e) => {
+      setSearchTransaction(e.target.value);
+    },
+    [setSearchTransaction],
+  );
+
+  const handleTypeChange = useCallback(
+    (e) => {
+      setSelectedType(e.target.value);
+    },
+    [setSelectedType],
+  );
+
+  const handleDateChange = useCallback(
+    (date) => {
+      setSelectedDate(date);
+    },
+    [setSelectedDate],
+  );
+
+  const handleAccountChange = useCallback(
+    (e) => {
+      setSelectedAccount(e.target.value);
+    },
+    [setSelectedAccount],
+  );
+
   return (
     <div className="rounded-[28px] border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-4 sm:p-5">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
@@ -33,9 +62,7 @@ export const FilterBar = ({
           <Search className="h-5 w-5 text-zinc-400 dark:text-zinc-500" />
           <input
             value={searchTransaction}
-            onChange={(e) => {
-              setSearchTransaction(e.target.value);
-            }}
+            onChange={handleSearchChange}
             placeholder={t("history.searchTransaction")}
             className="w-full bg-transparent text-sm text-zinc-800 dark:text-zinc-100 outline-none placeholder:text-zinc-400 dark:placeholder:text-zinc-500 sm:text-base"
           />
@@ -48,7 +75,7 @@ export const FilterBar = ({
             <select
               className="w-full appearance-none rounded-2xl border border-zinc-200 dark:border-zinc-700 bg-[#fafafa] dark:bg-zinc-800 px-3 py-3 pl-9 pr-9 text-sm font-medium text-zinc-700 dark:text-zinc-200 outline-none"
               value={selectedType}
-              onChange={(e) => setSelectedType(e.target.value)}
+              onChange={handleTypeChange}
             >
               {TRANSACTION_TYPE_OPTIONS.map((option) => (
                 <option key={option.value} value={option.value}>
@@ -63,7 +90,7 @@ export const FilterBar = ({
             <CalendarDays className="h-4 w-4" />
             <DatePicker
               selected={selectedDate}
-              onChange={(date) => setSelectedDate(date)}
+              onChange={handleDateChange}
               dateFormat="MMMM yyyy"
               showMonthYearPicker
               className="w-[78px] bg-transparent text-center outline-none"
@@ -75,7 +102,7 @@ export const FilterBar = ({
               name="account"
               id="account"
               value={selectedAccount}
-              onChange={(e) => setSelectedAccount(e.target.value)}
+              onChange={handleAccountChange}
               className="bg-transparent outline-none"
             >
               <option value={ALL_ACCOUNTS_VALUE}>{t("history.allAccounts")}</option>
@@ -91,3 +118,5 @@ export const FilterBar = ({
     </div>
   );
 };
+
+export const FilterBar = memo(FilterBarComponent);

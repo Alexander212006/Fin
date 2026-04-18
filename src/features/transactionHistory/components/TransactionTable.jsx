@@ -1,3 +1,4 @@
+import { memo, useCallback } from "react";
 import { TransactionItem } from "./TransactionItem";
 import { TRANSACTION_TABLE_HEADERS } from "../constants/transactionConstants";
 import { formatCurrency } from "../../../utils/currency";
@@ -8,10 +9,10 @@ import { getTransactionAccount } from "../utils/buildTransactions";
 import { useI18n } from "../../../i18n";
 import { handleExportFinancialData } from "../../setting/utils/handleExportFinancialData";
 
-export const TransactionTable = ({ transactions, currency, languageRegion }) => {
+export const TransactionTable = memo(({ transactions, currency, languageRegion }) => {
   const { t } = useI18n();
 
-  const handleExportTransactions = () => {
+  const handleExportTransactions = useCallback(() => {
     handleExportFinancialData({
       transactions,
       t,
@@ -24,7 +25,7 @@ export const TransactionTable = ({ transactions, currency, languageRegion }) => 
         successFallback: "Transactions exported as CSV.",
       },
     });
-  };
+  }, [transactions, t]);
 
   return (
     <div className="rounded-[28px] border border-zinc-200 dark:border-zinc-700 bg-white dark:bg-zinc-900 p-4 sm:p-6">
@@ -149,5 +150,6 @@ export const TransactionTable = ({ transactions, currency, languageRegion }) => 
       </div>
     </div>
   );
-};
+});
+
 

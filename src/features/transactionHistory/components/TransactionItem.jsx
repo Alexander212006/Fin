@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { formatCurrency } from "../../../utils/currency";
 import { formatDate } from "../../../utils/date";
 import { ACCOUNTS } from "../../../constants/accounts";
@@ -5,7 +6,7 @@ import { TrendingDown, TrendingUp } from "lucide-react";
 import { getTransactionAccount } from "../utils/buildTransactions";
 import { useI18n } from "../../../i18n";
 
-export const TransactionItem = ({ item, currency, languageRegion }) => {
+export const TransactionItem = memo(({ item, currency, languageRegion }) => {
   const { t } = useI18n();
   const isIncome = item.type === "income";
   const account = getTransactionAccount(item);
@@ -59,4 +60,5 @@ export const TransactionItem = ({ item, currency, languageRegion }) => {
       </td>
     </tr>
   );
-};
+});
+
